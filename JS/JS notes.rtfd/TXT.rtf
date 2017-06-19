@@ -1,0 +1,90 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 HelveticaNeue;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww6140\viewh10200\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 blocks include if, while, switch and for loops\
+let, const are 
+\b block-scoped
+\b0 \
+\
+var is function-scoped (it stays alive within the function)\
+var is NOT the preferred means of declaring a variable. use let or const\
+\
+method-style (object.method(arguments, \'85)\
+function style (f(a, b, c))\
+\
+expression = line of code that returns a value\
+\
+semicolon goes at the end of return statement; semicolon does NOT belong to a conditional loop; forEach requires semicolon; declarations (=) require semicolons; methods require semicolons (push); semicolon goes at the end of reader.question(\'93\'85\'94, function() \{\};)l goes after on(\'93click) ; does NOT belong after a map statement\
+\
+for return statements, you don\'92t need parenthesis if you are returning an object \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f1\fs24 \cf0 {{\NeXTGraphic Screen Shot 2017-06-15 at 16.37.17.jpg \width3780 \height2120
+}¬}\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 \
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+\cf0 \
+a return statement ends the code, but hoisting occurs first. \
+\
+you cannot break out of a forEach loop\
+\
+methods are written in mixedCase\
+\
+a prototype function = all instances have access to this method, saved once\
+\
+constructor functions are in CamelCase\
+\
+function declaration  = defines a named function without variable assignment\
+function addTwoNumbers(a, b) \{\
+	return a + b;\
+\}\
+\
+function expression = defines a function as part of a larger expression syntax\
+\
+var a = function() \{\
+	return 3;\
+\}\
+\
+falsy = undefined, null, NaN, 0, \'93\'94\
+\
+var bar = baz || createBar();\
+\
+JQuery objects use $\
+\
+module = collection of methods/constants\
+\
+arguments is like an array of each of the arguments; you can convert it into an array using slice (see documentation, Array.rom)\
+\
+\
+spread (\'85words) takes an array and turns it into a bunch of arguments separated by commas (\'85[5] becomes \'915\'92); think of \'85 as deconstructing an array\
+\
+primitive types: string, boolean, numbers, undefined, null\
+\
+default values\
+\
+call - individuals (you can only call)\
+\
+function expression (assigning a function to a variable) - \
+var addTwoNumber = function(a, b) \{\
+	return a + b;\
+\}\
+\
+function declaration (be careful) -\
+function addTwoNumbers(a, b) \{\
+	return a+b;\
+\}\
+\
+apply - takes an array as the second argument, the context as the first argument\
+\
+NaN is not equal to itself!\
+\
+objects are distinct; two String objects (var s = new String(\'93hello\'94) are not the same\
+\
+objects are implicitly coerced into\
+\
+always use ===}

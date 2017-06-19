@@ -1,0 +1,28 @@
+
+
+<html>
+<body>
+
+  <p>Click the button to display alert box.</p>
+
+<button onclick="testUndefined()">Undefined variable</button>
+<button onclick="testNull()">Null variable</button>
+
+<script>
+  function testUndefined() {
+    var TestUndefined;
+    //two alerts
+    alert(TestUndefined);
+    alert(typeof TestUndefined);
+  }
+
+  function testNull() {
+    var Null = null;
+    alert(Null);
+    alert(typeof Null);
+  }
+
+</script>
+
+</body>
+</html>

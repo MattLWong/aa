@@ -1,0 +1,84 @@
+h1 {
+  font-size: 35pt;
+  font-family: 'Vibur', cursive;
+}
+
+div.clock {
+  background-color: yellow;
+  font-family: sans-serif;
+  width: 300px;
+  text-align: center;
+  padding: 10px 200px 10px;
+  border-style: solid;
+  border-width: medium;
+  border-color: red;
+}
+
+.time {
+  -webkit-justify-content: flex-end;
+  justify-content: flex-end;
+}
+
+p.flex-container {
+  padding: 10px;
+  margin: 10px;
+  list-style: none;
+
+  -ms-box-orient: horizontal;
+  display: -webkit-box;
+  display: -moz-box;
+  display: -ms-flexbox;
+  display: -moz-flex;
+  display: -webkit-flex;
+  display: flex;
+}
+
+.space-between {
+  -webkit-justify-content: space-between;
+  justify-content: space-between;
+}
+
+.clock p {
+  background-color: green;
+  padding: 10px;
+}
+
+div.weather {
+  background-color: yellow;
+  font-family: sans-serif;
+  width: 300px;
+  padding: 10px 200px 10px;
+  border-style: solid;
+  border-width: medium;
+  border-color: red;
+}
+
+.weather p {
+  background-color: green;
+  padding: 10px;
+}
+
+div.tab-header ul {
+  list-style: none;
+  float: left;
+  width: 80px;
+}
+/*
+.weather2 {
+  background-color: grey;
+  width: 300px;
+  padding: 10px 200px 10px;
+  border-width: medium;
+  border-style: solid;
+  border-color: red;
+}
+
+.weather span {
+  text-align: center;
+}
+
+.loading {
+  background-color: green;
+  width: 300px;
+  padding: 10px 200px 10px;
+}*/

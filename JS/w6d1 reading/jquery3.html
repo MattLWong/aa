@@ -1,0 +1,17 @@
+<script type="text/javascript" src="https://code.jquery.com/jquery-2.1.1.js"></script>
+
+<script>
+  // does nothing; no such ul exists yet.
+  console.log($(document));
+  $(document).ready(function () {
+    $("ul.cool-things > li").attr("style", "background-color: red");
+    console.log("The document is loaded");
+  });
+
+</script>
+
+<ul class="cool-things">
+  <li>Racecars</li>
+  <li>Lasers</li>
+  <li>Aeroplanes</li>
+</ul>

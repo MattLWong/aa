@@ -1,0 +1,123 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf810
+{\fonttbl\f0\fnil\fcharset0 Cambria;\f1\fnil\fcharset0 Consolas-Bold;}
+{\colortbl;\red255\green255\blue255;\red27\green31\blue34;\red21\green23\blue26;}
+{\*\expandedcolortbl;;\cssrgb\c14118\c16078\c18039;\cssrgb\c10588\c12157\c13725\c4706;}
+\margl1440\margr1440\vieww8720\viewh10200\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 A full-functional store needs a 1. reducer function, 2. actions, and 3. the store itself\
+\
+1. 
+\b frontend/store.js 
+\b0 - import \{ createStore \} from redux, reducer from reducer\
+2. frontend/store.js - export the store function once its created\
+3. frontend/entry.jsx - import store, widget (the component that holds all other components), React, ReactDOM\
+4. the primary component accepts store as a prop\
+5. frontend/widget.jsx - import React, action, and other components\
+6. Subscribe the widget to the store (requires the widget component to re-render whenever the store changes)\
+7. create an ajax request that produces a response object\
+8. the response object is converted into an action object by passing it through the action function\
+9. 
+\b frontend/actions.js
+\b0  - actions are functions that take arguments and produce objects with a type\
+10. the store (which is a prop) has a dispatch function that accepts the action object\
+11. 
+\b frontend/reducer.js 
+\b0 - it has an initial state and a reducer function\
+12. the reducer automatically takes a state, and the action (2nd parameter) determines if the store undergoes a state change\
+\
+\
+this.forceUpdate = this.forceUpdate.bind(this)\
+this.props.store.subscribe(this.forceUpdate)\
+\
+Node Package Manager\
+\
+1. CD to the root of the project\
+2. 
+\b npm init \'97yes (creates a package.json)
+\b0 \
+3. 
+\f1\b\fs27\fsmilli13600 \cf2 \cb3 \expnd0\expndtw0\kerning0
+\outl0\strokewidth0 \strokec2 npm install --save webpack react react-dom redux react-redux babel-core babel-loader babel-preset-react babel-preset-es2015 lodash
+\f0\b0\fs30 \cf0 \cb1 \kerning1\expnd0\expndtw0 \outl0\strokewidth0 \
+4. adjust webpack.config.js\
+5. add webpack script to package.json\
+6. create a gitignore file\
+\
+package.json - lists all of an app\'92s JS dependencies like react or redux, similar to gemfile\
+\
+// similar to gem install <gem_name>\
+npm install \'97save react redux\
+\'97 the save flag installs the package and lists it in the package.json\
+\
+//adding a webpack script to package.json will ensure package.json-specified version will run\
+\
+//always run npm run webpack rather than just webpack\
+\
+// 1. npm init \'97yes initializes an app with NPM by generating a standard package.json\
+// 2. npm install \'97save <package_name> install and lists a NPM package as a dependency in a package.json\
+// 3. npm install: downloads all JS dependencies listed in a package.json\
+// 4. Add webpack script to enable \'93npm run webpack\'94\
+\
+\
+ES6 Importing and Exporting\
+\
+export \{ function1, function2, function3 \};\
+\
+//preferred way, export each function as a constant\
+export const func1 = todo => (\{\
+	type: \'93RECEIVE_TODO\'94,\
+	todo\
+\});\
+\
+//one item per file\
+class TodoList \{\
+\}\
+\
+export 
+\b default
+\b0  TodoList\
+\
+or\'85\
+\
+export default () => \{\
+	//function body\
+\}\
+\
+//We no longer use module.exports\
+// for single exports, use the following syntax\
+import TodoList from \'91./todo_list\'92;\
+\
+// for multiple exports, use the following syntax:\
+import \{ func1, func2 \} from \'91./todo_actions\'92;\
+import * as TodoActions from \'91./todo_actions\'92;\
+\
+props - information passed down to components at the time it is declared, does not mutate\
+\
+state - mutable data\
+\
+render - every component has a render function\
+representation of the component\
+returns HTML\
+never call it!!!\
+changing props or state automatically re-renders the component\
+\
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\b \cf0 this.setState
+\b0  causes a re-render, merging objects (overwriting a certain value)\
+\
+jsx - html with JS\
+\
+render should return a single element at the root, always return a div\
+\
+still have to call \'93preventDefault()\'94\
+onClick, onChange, on Whatever\
+\
+ReactDOM.render(argument\
+\
+
+\b need XML help? - check the weather widget\
+need location help? - check the weather widget
+\b0 \
+}
