@@ -1,0 +1,87 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;\f1\fnil\fcharset0 Menlo-Bold;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww18700\viewh19780\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 HTML/CSS Questions:\
+\
+1. What is display: block?\
+2. What is position: absolute?\
+3. What is overflow: hidden?\
+4. Margin: 0 auto (this centers the page)\
+\
+CSS Notes\
+\
+Element and Class selectors = good\
+Universal and ID selectors = bad\
+Precedence: Inline > ID > Class > Element\
+\
+Keep selectors as shallow as possible.\
+\
+Not all css properties are inherited; 
+\f1\b margins
+\f0\b0  and 
+\f1\b paddings
+\f0\b0  are non-inherited properties, but you can declare them to be. Inherited properties include font-family/line-height/font-size\
+\
+Stylesheet are always computed first\
+\
+CSS Reset: trickle-down is good. Put defaults in the body element tag. You don\'92t want to hard-code properties or else you have a lot of extra code. Use inherit in the reset. \
+\
+Good idea to set background to transparent and target backgrounds individually. \
+\
+Display:\
+Block: minimum height, full width (=no neighbors); spaces are not counted\
+\
+Inline: keeps to minimum width and height\
+Inline: multiple spaces are treated as a single space. \
+Inline: Zero respect for width or height.\
+Inline: width-padding is respected, but weird things happen with top and bottom. width-margin is also respected, but ignores vertical-margins\
+Inline: you can center this\
+\
+Inline-block: respects height and width; respects padding/margins; but has neighbors; \
+Inline-block: vertical-align: middle places it in the middle of the line\
+\
+Margins collapse. Two blocks with 100px margin separate by 100px.\
+\
+Clearfix (or group) is a class on the parent container (article, the class has a content of \'93\'94 and clear=left/both AND display: block. It must be a block. It fixes an image sticking through.\
+\
+Basic website\
+h1 \{ float left \}\
+header ul li \{ float: left; margin-right: 10px \}\
+header ul \{ float: right \}\
+header \
+\
+box-sizing: border-box \'97 this essentially takes the padding and includes it in the width percentage (width: 33% will stay %33 with padding added to it)\
+\
+Flexbox\
+- parent -> display: flex\
+- parent -> justify-content: space-between\
+- body -> display: flex; flex-wrap: wrap;\
+- header ul -> align-items: centers vertically\
+- children -> flex: 1 100%\
+- children -> flex: 3; order: 2;\
+\
+Positioning:\
+1. Static: This is default; shows up where expected, takes up space in the document flow; informally \'93not positioned\'94; nudging is not respected (left, right, top, bottom)\
+2. Relative: shows up where expected, takes up space in document flow; nudging is respected, relative to its original position. relative go on TOP of everything static. Also creates a new coordinate system for anything positioned absolute\
+3. Absolute: does not take up space in the document flow; lifted up and placed on top of anything static; shows up by default where expected; coordinate system is that of nearest ancestor that is NOT statically positioned; if none, default behavior is window; take up minimal space for content. The content inside the relative parent container pushes its content. With top bottom left right = 0px and width and height auto, you can wrap the whole document\
+4. Fixed: does not take up space in the document flow; stays in the same position; sticks to the window; coordinate system is always the window\
+\
+\'97 Relative parent sets up coordinate system for absolute\
+\
+Z-index is sensitive to nesting.\
+\'97 All static objects have a z-index of 0;\
+\
+Trick to get image to be the size of figure (its parent) container:\
+img \{\
+	display: block;\
+	width: 100%;\
+	height: auto;\
+\}\
+\
+\
+Questions:\
+1. A div cannot be a child of a paragraph? Why?}

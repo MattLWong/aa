@@ -1,48 +1,37 @@
 import React from 'react';
 
 class Clock extends React.Component {
-  constructor(props){
-    super(props);
-    this.state = {time: new Date()};
+  constructor(props) {
+    super(props)
+    this.state = {date: new Date()};
     this.tick = this.tick.bind(this);
   }
 
   componentDidMount() {
-    this.intervalId = setInterval(this.tick, 1000)
-  }
-
-  componentWillUnmount() {
-    this.intervalId.clearInterval();
+    setInterval(this.tick, 1000)
   }
 
   tick() {
-    this.setState({time: new Date()});
+    this.setState({date: new Date()})
   }
 
-
   render() {
-    let hours = this.state.time.getHours();
-    let minutes = this.state.time.getMinutes();
-    let seconds = this.state.time.getSeconds();
+    let date = this.state.date;
+    let minutes = date.getMinutes();
+    let hours = date.getHours();
+    let seconds = date.getSeconds();
 
     minutes = (minutes < 10) ? `0${minutes}` : minutes;
-    seconds = (seconds < 10) ? `0${seconds}` : seconds;
+    hours = (hours < 10) ? `0${hours}` : hours;
+    seconds = (seconds < 10) ?`0${seconds}` : seconds;
 
-
-    return (
+    return(
       <div>
         <h1>Clock</h1>
-        <div className="clock">
-          <p className="flex-container space-between">
-            <span className="flex-item">Time:</span>
-            <span className='flex-item'>{hours}:{minutes}:{seconds} PDT</span>
-          </p>
-          <p className="flex-container space-between">
-            <span className='flex-item'>Date:</span>
-            <span className='flex-item'>{this.state.time.toDateString()}</span>
-          </p>
-        </div>
+        <p>Time: <span>{hours}:{minutes}:{seconds}</span></p>
+        <p>Day: <span>{date.toDateString()}</span></p>
       </div>
+
     )
   }
 }

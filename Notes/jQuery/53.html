@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title></title>
+    <style media="screen">
+      div {
+        display: block;
+      }
+    </style>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-1.12.1.js"> </script>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td>First Name</td>
+        <td><input type="text" name="" id='firstName' value=""></td>
+        <td><div class="" id='firstNameHelpDiv'></div></td>
+      </tr>
+      <tr>
+        <td>Last Name</td>
+        <td><input type="text" id="lastName" name="" value=""></td>
+        <td><div class="" id='lastNameHelpDiv'> <div></td>
+      </tr>
+      <tr>
+        <td>Email</td>
+        <td><input type="text" id='email' name="" value=""></td>
+        <td><div class="" id="emailHelpDiv"></div></td>
+      </tr>
+      <tr>
+        <td>Income</td>
+        <td><input type="text" id='income' name="" value=""></td>
+        <td><div class="" id='incomeHelpDiv'></div></td>
+      </tr>
+    </table>
+
+    <script type="text/javascript">
+      $(document).ready(function () {
+        var textBoxes = $('input[type="text"]');
+        textBoxes.focus(function() {
+          var helpDiv = $(this).attr('id') + 'HelpDiv';
+          $('#' + helpDiv).load('help53.html #' + helpDiv);
+
+        })
+        textBoxes.blur(function() {
+          var helpDiv = $(this).attr('id') + 'HelpDiv';
+          $('#' + helpDiv).html('');
+        })
+      })
+    </script>
+  </body>
+</html>

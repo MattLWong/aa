@@ -1,70 +1,105 @@
 import React from 'react';
 
+const toQueryString2 = (obj) => {
+  let parts = [];
+  for (let i in obj) {
+      if (obj.hasOwnProperty(i)) {
+        console.log(typeof i);
+          parts.push(`${encodeURIComponent(i)}=${encodeURIComponent(obj[i])}`);
+      }
+  }
+  return parts.join('&');
+}
+
 class Weather extends React.Component {
-  constructor(props){
-    super(props);
+  constructor(props) {
+    super(props)
     this.state = {
-      weather: null,
-      location: null
+      city: null,
+      temp: null
     }
-    this.pollWeather = this.pollWeather.bind(this);
   }
 
   componentDidMount() {
-    //I don't know why this works
-    let that = this;
-    navigator.geolocation.getCurrentPosition( function(location) {
-      that.pollWeather(location);
-    });
+    const that = this
+    navigator.geolocation.getCurrentPosition( function(position) {
+      that.pollWeather(position)
+    })
   }
 
-  pollWeather(location) {
-    let lat = location.coords.latitude.toString().slice(0,7);
-    let lon = location.coords.longitude.toString().slice(0,7);
-    let url = 'http://api.openweathermap.org/data/2.5/weather?'
-  // api.openweathermap.org/data/2.5/weather?lat={lat}&lon={lon}
-    const apiKey = '594c97173d9cb7059a636854f890425b';
-
+  pollWeather(position) {
+    let that = this;
+    const lat = position.coords.latitude.toString().slice(0,7);
+    const lon = position.coords.longitude.toString().slice(0,7);
+    let url = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
+    const apiKey = '594c97173d9cb7059a636854f890425b'
     url += `lat=${lat}&lon=${lon}&APPID=${apiKey}`
+    const xhr = new XMLHttpRequest();
+    xhr.onreadystatechange = function(data) {
+      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status == 200) {
+        let responseObj = JSON.parse(xhr.responseText);
+        that.setState({
+          weather: responseObj
+        })
 
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = () => {
-      //ready state of DONE means this is complete
-      if (xmlhttp.status === 200 && xmlhttp.readyState === XMLHttpRequest.DONE) {
-        const data = JSON.parse(xmlhttp.responseText);
-        console.log(data);
-        this.setState({weather: data});
       }
     }
-
-    xmlhttp.open('GET', url, true);
-    xmlhttp.send();
+    xhr.open("GET", url, true)
+    xhr.send();
   }
 
-  render () {
-    let content = <div></div>
+  render() {
+    let div = <h1>Hello</h1>;
 
-    if (this.state.weather) {
-      let weather = this.state.weather;
-      let temp = this.state.weather.main.temp;
-      content = <div>
+    if (this.state.city) {
+      div = <div>
         <h1>Weather</h1>
-          <div className="weather">
-          <p className="flex-container space-between">
-            <span className="flex-item">{this.state.weather.name}</span>
-            <span className="flex-item">{temp} degrees K</span>
-          </p>
-        </div>
-      </div>
+
+      <table>
+      <tbody>
+        <tr>
+          <th>Day</th>
+          <th>0</th>
+          <th>1</th>
+          <th>2</th>
+          <th>3</th>
+          <th>4</th>
+          <th>5</th>
+          <th>6</th>
+        </tr>
+        <tr>
+          <td>High</td>
+          <td>{this.state.temp[0].temp.max}</td>
+          <td>{this.state.temp[1].temp.max}</td>
+          <td>{this.state.temp[2].temp.max}</td>
+          <td>{this.state.temp[3].temp.max}</td>
+          <td>{this.state.temp[4].temp.max}</td>
+          <td>{this.state.temp[5].temp.max}</td>
+          <td>{this.state.temp[6].temp.max}</td>
+        </tr>
+        <tr>
+          <td>Low</td>
+          <td>{this.state.temp[0].temp.min}</td>
+          <td>{this.state.temp[1].temp.min}</td>
+          <td>{this.state.temp[2].temp.min}</td>
+          <td>{this.state.temp[3].temp.min}</td>
+          <td>{this.state.temp[4].temp.min}</td>
+          <td>{this.state.temp[5].temp.min}</td>
+          <td>{this.state.temp[6].temp.min}</td>
+        </tr>
+      </tbody>
+      </table>
+    </div>
     } else {
-      content =
-        <div className="loading">
-          <h1>Weather</h1>
-          <h2>Loading weather...</h2>
-          </div>
+      div = <div>
+        <h1>Weather</h1>
+        <p>Loading...</p>
+      </div>
     }
-    return content;
+
+    return div;
   }
 }
+
 
 export default Weather;

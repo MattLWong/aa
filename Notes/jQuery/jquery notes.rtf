@@ -1,0 +1,116 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww18700\viewh14200\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs20 \cf0 jQuery notes\
+\
+2. $document ready\
+\
+$(\'91document\'92).ready(function () \{\
+\
+\});\
+$(window).load(function () - waits for images/css\
+\
+3. CDN - allows for faster load times; see\
+\
+<script src=\'93(cdn link)</script>\
+<script> window.jQuery || document.write(local-jquery file)\
+\
+4. jQuery selectors\
+  \
+$(document).ready(function() \{\
+	$(\'91#button1\'92).click(function() \{\
+		alert(\'91jQuery Tutorial\'92);\
+\
+only finds the first element with the ID \
+$(\'91#button2\'92)[0] returns the HTMLInputElement\
+\
+document.getElementById is faster\
+\
+5. ID selectors:\
+$(element).html()\
+$(\'91table tr\'92).each(function (\'85 you can iterate through each element\
+$(\'91tr:even\'92) selects only the even rows\
+\
+6. class selectors\
+$(\'91.class,.big\'92) //selects all elements with class small or big\
+$(\'91.small.big\'92) // selects elements with BOTH classes\
+$(\'91.small\'92).filter(\'91.big\'92) //find all elements with class \'93small\'94, then removes any elements that don\'92t have the element \'93big\'94\
+\
+8. attribute selector\
+$(\'91[attribute]\'92)\
+$(\'91[attribute=\'93name\'94]\'92)\
+$(\'91div[attribute!=\'93name\'94]\'92) //finds all Div that don\'92t have an attribute = name (including divs that don\'92t have any attributes at all)\
+$(\'91div:not([attribute=\'93name\'94]) //same as above\
+$(\'91[title*=\'93value\'94]\'92) //Substring: finds all attributes that contain substring values\
+$(\'91[title~=\'93value\'94]\'92) //Word: finds attributes with the whole word \'91myspan\'92\
+$(\'91[title|=\'93value\'94]\'92) //Prefix selector: find that has title = value of value with a hyphen\
+$(\'91[title]^=\'93value\'94]\'92) //Starts with selector\
+$(\'91[title]$=\'93value\'94]\'92) //end with selector\
+\
+9. case insensitive attribute selector\
+\
+$(\'91div[title]\'92).filter(function () \{\
+	return $(this).attr(\'91title\'92).toLowerCase() == \'93divtitle\'94;\
+\}).css(\'91border\'92,\'923px solid red\'92);\
+\
+10. input vs :input\
+input scans only input elements\
+:input scans all input elements, textarea, select, etc\
+\
+$(\'91input[type=\'93text\'94]).each(function () \{\
+	alert($(this).val());\
+\
+11. checked selector\
+- grab the results from radio and checkout\
+- you can find the length of a jQuery object\
+- concatenate attribute selectors: $(\'91input[name=\'93\'92 + groupName + \'91\'93]:checked\'92);\
+- $(this).val() returns the attribute value\
+- $(this).val().text() returns the text found within a label\
+\
+12/13. Two checkbox groups\
+- Really great video! Functions are computed immediately on click handler\
+\
+14. selected selector\
+- You bind a change handler to the select html unit\
+- You can also create a select with multiple selections\
+- you can append html to a div element by $(\'93#divResult\'92).html();\
+\
+15. disabled selector\
+- :disabled versus enabled\
+- $(\'91input[type=\'93text\'94]:disabled\
+\
+16. Each function\
+- return false ends the each statement\
+\
+17. method chaining\
+- attr(\'91title\'92, \'91MY TITLE\'92) is a tooltip\
+- text() does not return a jQuery object back\
+\
+18. JSON (javascript object notation) is an alternative to XML\
+- nesting is possible\
+\
+19. JSON object to string\
+- var jsonString = JSON.stringify(JSONObject)\
+- var array = JSON.parse(jsonString)\
+- to iterate through the array, use $.each(array, function (i, item) \{\'85\
+\
+20. .NET object to JSON string, JSON string to .NET object\
+\
+\'97\'97USE SCREENSHOTS BELOW\'97\'97\
+\
+41. fadeOut(miliseconds) makes an element display none\
+\
+52. <table> <tr = table row><td = table data)\
+align = \'93center\'94 //moves something to the center of the screen\
+border = 1\
+style = \'91border-collapse:collapse\'92 - this makes the borders all equivalent\
+\
+$(window).scroll(function () \{\}) executes the function whenever the window is scrolled\
+\
+$(window).scrollTop() returns the height of the top of the browser from the top of the window\
+\
+89. DID NOT WATCH THIS VIDEO}

@@ -16,20 +16,19 @@ const Names = [
   'Xander'
 ];
 
-const tabs = [
-  {tab1: "This is tab 1"},
-  {tab2: "This is tab 2"},
-  {tab3: "This is tab 3"}
-]
+const Panes = [
+  {title: 'one', content: 'I am the first'},
+  {title: 'two', content: 'Second pane here'},
+  {title: 'three', content: 'Third pane here'}
+];
 
 class Root extends React.Component {
 	render() {
 		return(
 			<div>
 				<Clock />
-				<Weather />
 				<Autocomplete names={Names} />
-        <Tabs tabs={tabs}/>
+        <Tabs panes={Panes}/>
 			</div>
 		)
 	}
