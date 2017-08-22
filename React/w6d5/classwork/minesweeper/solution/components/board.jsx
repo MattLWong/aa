@@ -30,7 +30,7 @@ class Board extends React.Component{
   }
 
   renderTiles(row, i){
-    // reutnrns a bunch of tiles for each row
+    // returns a bunch of tiles for each row
     const board = this.props.board;
     return row.map( (tile, j) => {
       return (

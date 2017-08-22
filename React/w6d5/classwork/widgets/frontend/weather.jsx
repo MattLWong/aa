@@ -1,105 +1,75 @@
 import React from 'react';
 
-const toQueryString2 = (obj) => {
+const toQueryString = (obj) => {
   let parts = [];
   for (let i in obj) {
       if (obj.hasOwnProperty(i)) {
-        console.log(typeof i);
           parts.push(`${encodeURIComponent(i)}=${encodeURIComponent(obj[i])}`);
       }
   }
   return parts.join('&');
 }
 
-class Weather extends React.Component {
+export default class Weather extends React.Component {
   constructor(props) {
-    super(props)
+    super(props);
     this.state = {
-      city: null,
-      temp: null
-    }
+      weather: null
+    };
+    this.pollWeather = this.pollWeather.bind(this);
   }
 
   componentDidMount() {
-    const that = this
-    navigator.geolocation.getCurrentPosition( function(position) {
-      that.pollWeather(position)
-    })
+    navigator.geolocation.getCurrentPosition(this.pollWeather);
   }
 
-  pollWeather(position) {
-    let that = this;
-    const lat = position.coords.latitude.toString().slice(0,7);
-    const lon = position.coords.longitude.toString().slice(0,7);
-    let url = 'http://api.openweathermap.org/data/2.5/forecast/daily?'
-    const apiKey = '594c97173d9cb7059a636854f890425b'
-    url += `lat=${lat}&lon=${lon}&APPID=${apiKey}`
-    const xhr = new XMLHttpRequest();
-    xhr.onreadystatechange = function(data) {
-      if(xhr.readyState === XMLHttpRequest.DONE && xhr.status == 200) {
-        let responseObj = JSON.parse(xhr.responseText);
-        that.setState({
-          weather: responseObj
-        })
+  pollWeather(location) {
+    let lat = location.coords.latitude;
+    let long = location.coords.longitude;
+    let url = 'http://api.openweathermap.org/data/2.5/weather?';
+    let params = {
+      lat: location.coords.latitude,
+      lon: location.coords.longitude
+    };
+    url += toQueryString(params);
+    const apiKey = 'f816d7f39052e3a98b21952097a43076';
+    // This is our API key; please use your own!
+    url += `&APPID=${apiKey}`;
 
+    let xmlhttp = new XMLHttpRequest();
+    xmlhttp.onreadystatechange = () => {
+      //ready state of DONE means this is complete
+      if (xmlhttp.status === 200 && xmlhttp.readyState === XMLHttpRequest.DONE) {
+        const data = JSON.parse(xmlhttp.responseText);
+        debugger;
+        this.setState({weather: data});
       }
-    }
-    xhr.open("GET", url, true)
-    xhr.send();
+    };
+
+    xmlhttp.open('GET', url, true);
+    xmlhttp.send();
   }
 
   render() {
-    let div = <h1>Hello</h1>;
+    let content = <div></div>;
 
-    if (this.state.city) {
-      div = <div>
-        <h1>Weather</h1>
-
-      <table>
-      <tbody>
-        <tr>
-          <th>Day</th>
-          <th>0</th>
-          <th>1</th>
-          <th>2</th>
-          <th>3</th>
-          <th>4</th>
-          <th>5</th>
-          <th>6</th>
-        </tr>
-        <tr>
-          <td>High</td>
-          <td>{this.state.temp[0].temp.max}</td>
-          <td>{this.state.temp[1].temp.max}</td>
-          <td>{this.state.temp[2].temp.max}</td>
-          <td>{this.state.temp[3].temp.max}</td>
-          <td>{this.state.temp[4].temp.max}</td>
-          <td>{this.state.temp[5].temp.max}</td>
-          <td>{this.state.temp[6].temp.max}</td>
-        </tr>
-        <tr>
-          <td>Low</td>
-          <td>{this.state.temp[0].temp.min}</td>
-          <td>{this.state.temp[1].temp.min}</td>
-          <td>{this.state.temp[2].temp.min}</td>
-          <td>{this.state.temp[3].temp.min}</td>
-          <td>{this.state.temp[4].temp.min}</td>
-          <td>{this.state.temp[5].temp.min}</td>
-          <td>{this.state.temp[6].temp.min}</td>
-        </tr>
-      </tbody>
-      </table>
-    </div>
+    if (this.state.weather) {
+      let weather = this.state.weather;
+      let temp = (weather.main.temp - 273.15) * 1.8 + 32;
+      content = <div>
+                  <p>{weather.name}</p>
+                  <p>{temp.toFixed(1)} degrees</p>
+                </div>;
     } else {
-      div = <div>
-        <h1>Weather</h1>
-        <p>Loading...</p>
-      </div>
+      content = <div className='loading'>loading weather...</div>;
     }
-
-    return div;
+    return (
+      <div>
+        <h1>Weather</h1>
+        <div className='weather'>
+          {content}
+        </div>
+      </div>
+    );
   }
-}
-
-
-export default Weather;
+};

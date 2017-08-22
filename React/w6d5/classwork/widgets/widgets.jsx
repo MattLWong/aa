@@ -28,6 +28,7 @@ class Root extends React.Component {
 			<div>
 				<Clock />
 				<Autocomplete names={Names} />
+        <Weather />
         <Tabs panes={Panes}/>
 			</div>
 		)
