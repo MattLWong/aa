@@ -1,5 +1,5 @@
 import merge from 'lodash/merge';
-import { RECEIVE_TODO, RECEIVE_TODOS, REMOVE_TODO } from '../actions/todo_actions';
+import { RECEIVE_TODO, RECEIVE_TODOS, REMOVE_TODO, TODO_ERROR } from '../actions/todo_actions';
 
 const todosReducer = (state = {}, action) => {
   Object.freeze(state);
@@ -24,6 +24,8 @@ const todosReducer = (state = {}, action) => {
         }
       })
       return nextState;
+    case TODO_ERROR:
+      alert(action.error)
     default:
       return state;
   }
