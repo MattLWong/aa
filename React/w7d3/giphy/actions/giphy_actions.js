@@ -8,9 +8,9 @@ export const receiveSearchGiphys = giphys => ({
   giphys
 })
 
-export const fetchSearchGiphys = (searchTerm) => (
+export const fetchSearchGiphys = (searchTerm, quantity) => (
   (dispatch) => {
-    APIUtil.fetchSearchGiphys(searchTerm)
+    APIUtil.fetchSearchGiphys(searchTerm, quantity)
     .then(giphys => dispatch(receiveSearchGiphys(giphys.data)))
   }
 )

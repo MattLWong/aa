@@ -6,7 +6,8 @@ class GiphysSearch extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      searchTerm: ""
+      searchTerm: "",
+      quantity: 4
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -15,7 +16,7 @@ class GiphysSearch extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     let searchTerm = this.state.searchTerm.split(' ').join("+");
-    this.props.fetchSearchGiphys(searchTerm);
+    this.props.fetchSearchGiphys(searchTerm, this.state.quantity);
     this.setState({
       searchTerm: ""
     });
@@ -38,6 +39,7 @@ class GiphysSearch extends React.Component {
             name="searchTerm"
             onChange={this.handleChange}
             value={this.state.searchTerm}/>
+
           <button type="submit" onClick={this.handleSubmit}>Search Giphy</button>
         </form>
         <GiphysIndex giphys={this.props.giphys}/>

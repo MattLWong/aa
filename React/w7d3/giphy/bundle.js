@@ -6971,9 +6971,9 @@ var receiveSearchGiphys = exports.receiveSearchGiphys = function receiveSearchGi
   };
 };
 
-var fetchSearchGiphys = exports.fetchSearchGiphys = function fetchSearchGiphys(searchTerm) {
+var fetchSearchGiphys = exports.fetchSearchGiphys = function fetchSearchGiphys(searchTerm, quantity) {
   return function (dispatch) {
-    APIUtil.fetchSearchGiphys(searchTerm).then(function (giphys) {
+    APIUtil.fetchSearchGiphys(searchTerm, quantity).then(function (giphys) {
       return dispatch(receiveSearchGiphys(giphys.data));
     });
   };
@@ -12257,7 +12257,8 @@ var GiphysSearch = function (_React$Component) {
     var _this = _possibleConstructorReturn(this, (GiphysSearch.__proto__ || Object.getPrototypeOf(GiphysSearch)).call(this, props));
 
     _this.state = {
-      searchTerm: ""
+      searchTerm: "",
+      quantity: 4
     };
     _this.handleSubmit = _this.handleSubmit.bind(_this);
     _this.handleChange = _this.handleChange.bind(_this);
@@ -12269,7 +12270,7 @@ var GiphysSearch = function (_React$Component) {
     value: function handleSubmit(e) {
       e.preventDefault();
       var searchTerm = this.state.searchTerm.split(' ').join("+");
-      this.props.fetchSearchGiphys(searchTerm);
+      this.props.fetchSearchGiphys(searchTerm, this.state.quantity);
       this.setState({
         searchTerm: ""
       });
@@ -12357,8 +12358,8 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchSearchGiphys: function fetchSearchGiphys(search) {
-      return dispatch((0, _giphy_actions.fetchSearchGiphys)(search));
+    fetchSearchGiphys: function fetchSearchGiphys(search, quantity) {
+      return dispatch((0, _giphy_actions.fetchSearchGiphys)(search, quantity));
     }
   };
 };
@@ -12460,10 +12461,10 @@ exports.default = (0, _redux.combineReducers)({
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-var fetchSearchGiphys = exports.fetchSearchGiphys = function fetchSearchGiphys(search_term) {
+var fetchSearchGiphys = exports.fetchSearchGiphys = function fetchSearchGiphys(search_term, quantity) {
   return $.ajax({
     method: "GET",
-    url: "http://api.giphy.com/v1/gifs/search?q=" + search_term + "&api_key=dc6zaTOxFJmzC&limit=4"
+    url: "http://api.giphy.com/v1/gifs/search?q=" + search_term + "&api_key=dc6zaTOxFJmzC&limit=" + quantity
   });
 };
 

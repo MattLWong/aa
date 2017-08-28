@@ -7,7 +7,7 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchSearchGiphys: (search) => dispatch(fetchSearchGiphys(search))
+  fetchSearchGiphys: (search, quantity) => dispatch(fetchSearchGiphys(search, quantity))
 })
 
 export default connect(
