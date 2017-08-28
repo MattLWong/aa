@@ -16,7 +16,7 @@ const todosReducer = (state = {}, action) => {
       const newTodo = {[action.todo.id]: action.todo};
       return Object.assign({}, state, newTodo);
     case REMOVE_TODO:
-      nextState = {}
+      nextState = {};
       const keys = Object.keys(state);
       keys.forEach( (key) => {
         if (action.todo.id != key) {

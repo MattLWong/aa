@@ -9,10 +9,20 @@ class TodoForm extends React.Component {
     this.state = {
       title: "",
       body: "",
-      done: false
+      done: false,
+      tag_names: [],
+      newTag: ""
     };
 
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.addTag = this.addTag.bind(this);
+  }
+
+  addTag(e){
+    this.setState({
+      tag_names: [ ...this.state.tag_names, this.state.newTag ],
+      newTag: ""
+    })
   }
 
   update(property) {
@@ -21,10 +31,14 @@ class TodoForm extends React.Component {
 
   handleSubmit(e) {
     e.preventDefault();
-    const todo = Object.assign({}, this.state, { id: uniqueId() });
+    const todo = Object.assign({}, this.state);
     // this.props.receiveTodo(todo);
     this.props.createTodo({ todo }).then(
-      () => this.setState({ title: '', body: ''})
+      () => this.setState({
+        title: '',
+        body: '',
+        tag_names: []
+      })
     );
     // this.setState({
     //   title: "",
@@ -32,11 +46,20 @@ class TodoForm extends React.Component {
     // });
   }
 
+  removeTag(idx) {
+    this.setState({
+      tag_names: this.state.tag_names.filter((_, index) => index !== idx)
+    });
+  }
+
   render() {
+    const tag_names = this.state.tag_names.map((tag, idx) => {
+      const clickHandler = () => this.removeTag(idx);
+      return <li key= { idx } onClick={clickHandler}>{ tag }</li>
+    });
     return (
-      <div>
-        <ErrorList errors={this.props.errors}/>
         <form className="todo-form" onSubmit={this.handleSubmit}>
+          <ErrorList errors={this.props.errors}/>
           <label>Title:
             <input
               className="input"
@@ -57,9 +80,20 @@ class TodoForm extends React.Component {
               onChange={this.update('body')}
               required></textarea>
           </label>
+          <label>
+            Tags
+            <input
+              className="input"
+              placeholder="Enter a new tag"
+              onChange={ this.update('newTag')}
+              value={ this.state.newTag } />
+            <button type="button" className="button" onClick={this.addTag}>Add Tag</button>
+          </label>
+          <ul className="tag-list">
+            { tag_names }
+          </ul>
           <button className="create-button">Create Todo!</button>
         </form>
-      </div>
     );
   }
 };

@@ -38,10 +38,10 @@ class TodoListItem extends React.Component {
   }
 
   render() {
-    const { title, body, id, done } = this.props.todo;
+    const { title, body, id, done, deleteTodo } = this.props.todo;
     let detail = null;
     if (this.state.detail) {
-      detail = <TodoDetailView todo={this.props.todo} />
+      detail = <TodoDetailView todo={this.props.todo} deleteTodo={this.deleteTodo}/>
     }
     return (
       <li className="todoItem">
@@ -49,7 +49,7 @@ class TodoListItem extends React.Component {
           <h2 onClick={this.toggleDetail}>{title}</h2>
           {detail}
           <button onClick={this.toggleTodo}>{done ? "Undo" : "Done" }</button>
-          <button onClick={this.deleteTodo}>Delete</button>
+
         </div>
       </li>
     )
