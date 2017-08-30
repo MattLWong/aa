@@ -1,8 +1,13 @@
-export const selectAllPokemon = (state) => {
-  let arr = [];
-  let keys = Object.keys(state.entities.pokemon);
-  keys.forEach( (key) => (
-    arr.push(state.entities.pokemon[key])
-  ))
-  return arr;
-};
+import values from 'lodash/values';
+
+export const selectAllPokemon = (state) => (
+  values(state.entities.pokemon)
+);
+
+export const selectPokeItems = (state, poke) => {
+  return poke ? poke.item_ids.map(id => state.entities.items[id]) : [];
+}
+
+export const selectPokemonItems = (state, id) => {
+  return state.entities.items[id]
+}
