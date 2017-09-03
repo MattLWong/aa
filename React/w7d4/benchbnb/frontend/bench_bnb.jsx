@@ -26,3 +26,7 @@ window.signup = signup;
 window.logout = logout;
 window.receiveCurrentUser = receiveCurrentUser;
 window.receiveErrors = receiveErrors;
+
+import { fetchBenches } from './util/bench_api_util';
+
+window.fetchBenches = fetchBenches;
