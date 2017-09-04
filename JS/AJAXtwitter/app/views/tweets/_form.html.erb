@@ -14,7 +14,7 @@
   <label>
     Mention
     <select name="tweet[mentioned_user_ids][]">
-      <option></option>
+      <option>(Mentioned User)</option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"><%= user.username %></option>
       <% end %>

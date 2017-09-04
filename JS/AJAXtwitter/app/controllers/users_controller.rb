@@ -23,11 +23,10 @@ class UsersController < ApplicationController
 
   def show
     if current_user.nil?
-      # let them log in
+      # let them log in; you must be logged in to see a user
       redirect_to new_session_url
       return
     end
-
     @user = User.includes(tweets: :mentioned_users).find(params[:id])
     render :show
   end
