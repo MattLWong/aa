@@ -4,7 +4,6 @@ class SessionsController < ApplicationController
 
   def create
     # signs a user in
-    byebug
     @user = User.find_by_credentials(
       params[:user][:username],
       params[:user][:password]

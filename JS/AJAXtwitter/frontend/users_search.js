@@ -22,6 +22,7 @@ class UsersSearch {
   }
 
   render(users) {
+    debugger;
     this.$ul.empty();
     users.forEach( user => {
       let $a = $('<a></a>');

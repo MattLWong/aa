@@ -1,5 +1,5 @@
 <h2>New Tweet!</h2>
-<form action="/tweets" method="POST">
+<form class="tweet-compose" action="/tweets" method="POST">
   <input
       type="hidden"
       name="authenticity_token"
@@ -14,7 +14,7 @@
   <label>
     Mention
     <select name="tweet[mentioned_user_ids][]">
-      <option>(Mentioned User)</option>
+      <option disabled selected>(Mentioned User)</option>
       <% User.all.each do |user| %>
         <option value="<%= user.id %>"><%= user.username %></option>
       <% end %>
@@ -23,4 +23,5 @@
   <br>
 
   <input type="Submit" value="Post Tweet!">
+  <strong class="char-left"></strong>
 </form>
