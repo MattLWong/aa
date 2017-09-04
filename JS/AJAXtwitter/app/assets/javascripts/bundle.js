@@ -45,9 +45,12 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	const FollowToggle = __webpack_require__(1);
+	const UsersSearch = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./users_search\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
 	
 	$(function() {
+	  // el is NOT a jquery object
 	  $('button.follow-toggle').each( (index, el) => new FollowToggle(el, {}));
+	  $('nav.users-search').each( (idx, el) => new UsersSearch(el));
 	});
 
 
@@ -125,6 +128,15 @@
 	      url: `/users/${id}/follow`,
 	      dataType: 'json',
 	      method
+	    })
+	  ),
+	
+	  searchUsers: query => (
+	    $.ajax({
+	      url: '/users/search',
+	      method: "get",
+	      data: { query },
+	      dataType: 'json'
 	    })
 	  )
 	}
