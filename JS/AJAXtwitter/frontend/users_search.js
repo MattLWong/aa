@@ -24,11 +24,21 @@ class UsersSearch {
   render(users) {
     this.$ul.empty();
     users.forEach( user => {
-      this.$ul.append(`<li><a href="/users/${user.id}">${user.username}</a></li>`);
-      this.$ul.append(
-        <button>
-        </button>
-      )
+      let $a = $('<a></a>');
+      $a.text(user.username);
+      $a.attr('href', `/users/${user.id}`);
+
+      let $followToggle = $('<button></button>');
+      new FollowToggle($followToggle, {
+        userId: user.id,
+        followState: user.followed ? 'followed' : 'unfollowed'
+      })
+      let $li = $('<li></li>');
+      $li.append($a);
+      $li.append($followToggle);
+
+      this.$ul.append($li);
+
     })
   }
 }

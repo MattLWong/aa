@@ -45,7 +45,7 @@
 /***/ function(module, exports, __webpack_require__) {
 
 	const FollowToggle = __webpack_require__(1);
-	const UsersSearch = __webpack_require__(!(function webpackMissingModule() { var e = new Error("Cannot find module \"./users_search\""); e.code = 'MODULE_NOT_FOUND'; throw e; }()));
+	const UsersSearch = __webpack_require__(3);
 	
 	$(function() {
 	  // el is NOT a jquery object
@@ -142,6 +142,58 @@
 	}
 	
 	module.exports = APIUtil;
+
+
+/***/ },
+/* 3 */
+/***/ function(module, exports, __webpack_require__) {
+
+	//transport the while object
+	const APIUtil = __webpack_require__(2);
+	const FollowToggle = __webpack_require__(1);
+	
+	class UsersSearch {
+	  constructor(el) {
+	    this.$el = $(el);
+	    this.$input = this.$el.find('input[name=username]');
+	    this.$ul = this.$el.find('ul.users');
+	
+	    this.$input.on('input', this.handleChange.bind(this));
+	  }
+	
+	  handleChange(event) {
+	    if (this.$input.val() === "") {
+	      this.render([]);
+	      return;
+	    }
+	
+	    APIUtil.searchUsers(this.$input.val())
+	      .then(users => this.render(users));
+	  }
+	
+	  render(users) {
+	    this.$ul.empty();
+	    users.forEach( user => {
+	      let $a = $('<a></a>');
+	      $a.text(user.username);
+	      $a.attr('href', `/users/${user.id}`);
+	
+	      let $followToggle = $('<button></button>');
+	      new FollowToggle($followToggle, {
+	        userId: user.id,
+	        followState: user.followed ? 'followed' : 'unfollowed'
+	      })
+	      let $li = $('<li></li>');
+	      $li.append($a);
+	      $li.append($followToggle);
+	
+	      this.$ul.append($li);
+	
+	    })
+	  }
+	}
+	
+	module.exports = UsersSearch;
 
 
 /***/ }
