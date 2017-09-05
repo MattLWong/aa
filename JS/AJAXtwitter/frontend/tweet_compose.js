@@ -28,15 +28,17 @@ class TweetCompose {
   handleSuccess(res) {
     // this.clearInput();
     this.$el.find(':input').prop('disabled', false);
-    console.log(res);
-    let mentioned_users = ""
+    this.clearInput();
+    const $tweetsUl = $(this.$el.data('tweets-ul'));
+    $tweetsUl.trigger('insert-tweet', res);
 
-    res.mentions.forEach( (mentioned_user) => {
-      mentioned_users += `<li><a href="/users/${mentioned_user.user_id}">${mentioned_user.user.username}</a></li>`
-    })
-    let $li = $(`<li>${res.content} -- <a href="/user/${res.user_id}">${res.user.username}</a> -- ${res.created_at}<ul>${mentioned_users}</ul></li>`);
-    this.clearInput.call(this);
-    $('#feed').prepend($li);
+    // let mentioned_users = ""
+    //
+    // res.mentions.forEach( (mentioned_user) => {
+    //   mentioned_users += `<li><a href="/users/${mentioned_user.user_id}">${mentioned_user.user.username}</a></li>`
+    // })
+    // let $li = $(`<li>${res.content} -- <a href="/user/${res.user_id}">${res.user.username}</a> -- ${res.created_at}<ul>${mentioned_users}</ul></li>`);
+    // $('#feed').prepend($li);
 
   }
 

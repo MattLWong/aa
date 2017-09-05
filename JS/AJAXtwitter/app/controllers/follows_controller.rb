@@ -7,7 +7,7 @@ class FollowsController < ApplicationController
     @follow = current_user.out_follows.create!(followee_id: params[:user_id])
     respond_to do |format|
       format.html { redirect_to request.referrer }
-      format.json { render json: @follow }
+      format.json {render :show}
     end
   end
 
@@ -20,7 +20,7 @@ class FollowsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to request.referrer }
-      format.json { render json: @follow }
+      format.json {render :show}
     end
   end
 end

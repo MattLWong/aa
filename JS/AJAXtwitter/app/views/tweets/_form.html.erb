@@ -1,14 +1,9 @@
 <h2>New Tweet!</h2>
-<form class="tweet-compose" action="/tweets" method="POST">
-  <input
-      type="hidden"
-      name="authenticity_token"
-      value="<%= form_authenticity_token %>">
+<form class="tweet-compose" data-tweets-ul="<%= tweets_ul %>">
 
-  <label>
-    Content
-    <textarea name="tweet[content]"></textarea>
-  </label>
+
+  <textarea name="tweet[content]" ></textarea>
+
   <br>
 
   <label>
@@ -33,4 +28,4 @@
     </select>
     <a class="remove-mentioned-user" href="#">Remove User</a>
   </div>
-  </script>
+</script>
