@@ -9,30 +9,28 @@
 User.destroy_all
 Tweet.destroy_all
 
-CATS = %w(breakfast earl curie markov gizmo kiki sally)
+PEOPLE = %w(Willy Cathy Amy Sarah Thao Lukas David Kat Cindy Amber Beverly Zhao Ulrich Zach Mickey Max Peter Obama Linda Simon Veronica Harold Zuckerberg Eric Carlos)
 
-CATS.each do |cat|
-  u = User.create!(username: cat, password: "#{cat}#{cat}")
+PEOPLE.each do |name|
+  u = User.create!(username: name, password: "#{name}#{name}")
 end
 
 MESSAGES = [
-  'Ate some tuna',
-  'Chased a string',
-  'Bounced a ball',
-  'Took a photo of a sandwich',
-  'Took a long nap',
-  'Jumped on some piano keys',
-  'Is that a mouse?',
-  'Scratched a human',
-  'Jumped to the top of the shelf!',
-  'Do cats know how to tweet? YES, we do.',
-  'Set world napping record',
-  'xvyadfoiuasdfnasfdn'
+  'Voted for Bernie Sanders',
+  'Enjoys playing recreational squash at the UC Berkeley RSF',
+  'Would like to travel to Iceland and Brazil',
+  'Grew up in San Diego',
+  'Would like to ride a bicycle across the United States',
+  'Believes in more stingent environmental regulations',
+  'Needs to update my Instagram and Twitter accounts',
+  'Had a relaxing summer and also learned to program',
+  'Enjoys listening to jazz and classical music',
+  'Is looking for a job as a front-end developer',
 ]
 
 User.all.each do |user|
   40.times do
     msg = MESSAGES.sample
-    Tweet.create!(user_id: user.id, content: msg, created_at: rand(3000).days.ago)
+    Tweet.create!(user_id: user.id, content: msg, created_at: rand(900).days.ago)
   end
 end

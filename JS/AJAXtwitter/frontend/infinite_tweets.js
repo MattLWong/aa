@@ -1,7 +1,5 @@
 const APIUtil = require('./api_util');
 
-const _ = require('lodash');
-
 class InfiniteTweets {
   constructor(el) {
     this.$el = $(el);
@@ -23,6 +21,8 @@ class InfiniteTweets {
         .then(res => this.insertTweets.call(this, res))
     }
 
+    var $target = $('html,body');
+    $target.animate({scrollTop: $target.height()});
   }
 
   insertTweets(res) {
@@ -36,10 +36,6 @@ class InfiniteTweets {
   }
 
   insertTweet(event, data) {
-    // const tmpl = _.template(this.$el.find('script').html());
-    // this.$el.find('ul#feed').prepend(tmpl({
-    //   tweets: [data]
-    // }));
     debugger;
     $('ul#feed').prepend(`<li>${data.content} -- <a href="/users/data.user_id">${data.user.username}</a> -- ${data.created_at}</li>`)
 

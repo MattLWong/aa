@@ -1,0 +1,88 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fnil\fcharset0 Cambria;\f1\fswiss\fcharset0 Helvetica;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww8720\viewh10200\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 React Notes\
+\
+REACT - JS library for front-end development\
+front-end framework\
+Just View layer\
+Virtual DOM tree\
+Updating the DOM is a performance bottleneck\
+\
+React component - JS Objects that return HTML\
+Single Responsibility - one component does one thing\
+\
+<app>\
+\
+</app>\
+\
+Props, state, JSX\
+\
+Inherit from React.Component\
+\
+props - static pieces of information passed down (to component) at moment of conception\
+state - changes over course of life\
+\
+purely functional component: does not keep track of internal state\
+\
+import React from \'91react\'92  \'97 ES6\
+// const React = require(\'91react\'92);\
+\
+MUST HAVE RENDER FUNCTION\
+RENDER MUST RETURN A SINGLE ROOT NODE\
+\
+ALWAYS PREVENT DEFAULT preventDefault()\
+\
+JSX cannot be read by browser. It has to be TRANSPILED into RAW JS\
+\
+\
+you can dynamically create LIST ITEMS by using map and return li (nested interpolation!)
+\f1\fs24 {{\NeXTGraphic Screen Shot 2017-08-18 at 09.41.19.jpg \width8840 \height1780
+}¬}\
+\
+\
+Redux Flux - unidirectional flow; front-end app architecture\
+\
+Action -> Dispatcher -> Store -> View\
+\
+Action has a type and (optional) payload\
+Useful for changing state\
+Dispatcher - callback functions mechanism for distributing actions to the Flux store. \
+Store = entire state of application\
+responsible for updating state of application when it receives an action\
+\
+SINGLE SOURCE OF TRUTH = entire state is stored in a single object in a single store (STATE TREE)\
+TO CHANGE TO THE STATE, must dispatch  an action\
+\
+Store updates state via reducer\
+subscription\
+Listens for actions \
+Reducer is a pure function; it takes a state and action and returns a new state\
+the action has a type and other parameter\
+store.dispatch(action)\
+\
+const counter = (state =  0, action) =>\
+const \{ createStore \} = Redux\
+const store = createStore(counter)\
+\
+use spread operator \'85 to concat\
+map is fine in the reducer if you want to return a new array\
+\
+const stateBefore = [\
+	\{\
+		id: 0,\
+		text: \'91Learn Redux\'92,\
+		completed: false\
+	\},\
+	\{\
+		id: 1,\
+		text: \'91Go shopping\'92,\
+		completed: false\
+	\}\
+]\
+\
+todo ( t, action ) in this case, t is an object}

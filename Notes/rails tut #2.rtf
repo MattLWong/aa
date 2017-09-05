@@ -1,0 +1,42 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1504\cocoasubrtf830
+{\fonttbl\f0\fnil\fcharset0 Cambria;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww8720\viewh10200\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 \
+1. Create new directory, cd into it\
+2. rails new (name-of-project) -d mysql\
+3. cd into that, then bundle install\
+4.  atom .\
+\
+1. go to config/database.yml\
+2.  change username (project-name + \'91admin\'92), password: password, socket: look at mysqlworkbench for socket\
+3. make development: database: (name-of-project)_development\
+4. $ mysql -u -root -p, then enter password\
+5. mysql> \'93create database (name-of-project)_development\
+6. mysql> use (name-of-project)_development\
+7. mysql> grant all privileges on (name-of-project)_development.*\
+	-> to ((project-name)+\'92admin\'92)@\'91localhost\'92\
+	-> identified by \'91password\'92;\
+8 .exit\
+9. $mysql -u (project-name+\'92admin\'92) -p, password: password\
+10. mysql> use (name-of-project)_development;\
+11. show tables;\
+12. describe users; / describe comments; / etc.\
+\
+1. rails generate scaffold User password:string email:string\
+2. rake db:migrate\
+3. rails server\
+\
+1. rails generate scaffold Article title:string post:text user_id:integer\
+2. rake db:migrate\
+3. rails generate model Comment commenter:string body:text article:references (article:references creates article_id - bigint(20) )\
+4. rails generate controller Comments\
+\
+IN DIRECTORY\
+\
+\
+\
+}

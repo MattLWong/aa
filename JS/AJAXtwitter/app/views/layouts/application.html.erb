@@ -6,26 +6,39 @@
 
     <%= stylesheet_link_tag    'application', media: 'all' %>
     <%= javascript_include_tag 'application' %>
+    <link href="https://fonts.googleapis.com/css?family=Ubuntu" rel="stylesheet">
+
   </head>
 
   <body>
-    <ul>
-      <li><%= link_to "Feed", feed_url %></li>
-      <li><%= link_to "User Search", search_users_url %></li>
+
+    <header>
+
+      <h1 class='title'><a href='/feed'> Ajax Twitter </a> </h1>
+
+      <div class="right-stuff">
+      <% if current_user %>
+        <form class='logout-form' action="/session" method="POST">
+          <input type="hidden" name="_method" value="DELETE">
+          <input
+            type="hidden"
+            name="authenticity_token"
+            value="<%= form_authenticity_token %>">
+
+          <input type="submit" value="Logout!">
+        </form>
+      <% end %>
+
+    <ul class="primary-links">
+      <% if current_user %>
+      <li><h4><a class="hvr-bounce-to-right" href='/users/search'>User Search</a></h4></li>
+      <% end %>
     </ul>
 
-    <% if current_user %>
-      <form action="/session" method="POST">
-        <input type="hidden" name="_method" value="DELETE">
-        <input
-          type="hidden"
-          name="authenticity_token"
-          value="<%= form_authenticity_token %>">
+    </div>
 
-        <input type="submit" value="Logout!">
-      </form>
-    <% end %>
-    
+    </header>
+
     <%= yield %>
   </body>
 </html>
