@@ -47,12 +47,14 @@
 	const FollowToggle = __webpack_require__(1);
 	const UsersSearch = __webpack_require__(3);
 	const TweetCompose = __webpack_require__(4);
+	const InfiniteTweets = __webpack_require__(5);
 	
 	$(function() {
 	  // el is NOT a jquery object
 	  $('button.follow-toggle').each( (index, el) => new FollowToggle(el, {}));
 	  $('nav.users-search').each( (idx, el) => new UsersSearch(el));
 	  $('form.tweet-compose').each( (idx, el) => new TweetCompose(el));
+	  $('div.infinite-tweets').each( (idx, el) => new InfiniteTweets(el));
 	});
 
 
@@ -149,6 +151,15 @@
 	      data: { tweet },
 	      dataType: 'json'
 	    })
+	  ),
+	
+	  fetchTweets: ( max ) => (
+	    $.ajax({
+	      url: '/feed',
+	      method: 'GET',
+	      data: { max_created_at: max },
+	      dataType: 'json'
+	    })
 	  )
 	}
 	
@@ -183,7 +194,6 @@
 	  }
 	
 	  render(users) {
-	    debugger;
 	    this.$ul.empty();
 	    users.forEach( user => {
 	      let $a = $('<a></a>');
@@ -280,6 +290,48 @@
 	}
 	
 	module.exports = TweetCompose;
+
+
+/***/ },
+/* 5 */
+/***/ function(module, exports, __webpack_require__) {
+
+	const APIUtil = __webpack_require__(2);
+	
+	class InfiniteTweets {
+	  constructor(el) {
+	    this.$el = $(el);
+	    this.$a = this.$el.find("a.fetch-more")
+	    this.maxCreatedAt = null;
+	    this.$a.on("click", this.fetchTweets.bind(this, event));
+	    APIUtil.fetchTweets()
+	      .then(res => this.insertTweets.call(this, res))
+	  }
+	
+	  fetchTweets(event) {
+	    event.preventDefault();
+	    if (this.maxCreatedAt == null) {
+	      APIUtil.fetchTweets()
+	        .then(res => this.insertTweets.call(this, res))
+	    } else {
+	      APIUtil.fetchTweets(this.maxCreatedAt)
+	        .then(res => this.insertTweets.call(this, res))
+	    }
+	
+	  }
+	
+	  insertTweets(res) {
+	    res.forEach( (tweet) => {
+	      $('ul#feed').append(`<li data-created=${tweet.created_at}>${tweet.content} -- <a href="/users/${tweet.user_id}">${tweet.user.username}</a> -- ${tweet.created_at}</li>`);
+	    })
+	    this.maxCreatedAt = $('ul#feed li').last().attr('data-created')
+	    if (res.length < 20) {
+	      $('a.fetch-more').text("No more tweets")
+	    }
+	  }
+	}
+	
+	module.exports = InfiniteTweets;
 
 
 /***/ }

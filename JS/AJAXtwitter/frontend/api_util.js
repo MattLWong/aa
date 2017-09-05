@@ -28,6 +28,15 @@ const APIUtil = {
       data: { tweet },
       dataType: 'json'
     })
+  ),
+
+  fetchTweets: ( max ) => (
+    $.ajax({
+      url: '/feed',
+      method: 'GET',
+      data: { max_created_at: max },
+      dataType: 'json'
+    })
   )
 }
 
