@@ -9,7 +9,7 @@
 User.destroy_all
 Tweet.destroy_all
 
-PEOPLE = %w(Willy Cathy Amy Sarah Thao Lukas David Kat Cindy Amber Beverly Zhao Ulrich Zach Mickey Max Peter Obama Linda Simon Veronica Harold Zuckerberg Eric Carlos)
+PEOPLE = %w(Willy Cathy Amy Sarah Thao Lukas David Kat Cindy Amber Beverly Zhao Ulrich Zach Mickey Max Peter Obama Linda Simon Veronica Harold Zuckerman Eric Carlos)
 
 PEOPLE.each do |name|
   u = User.create!(username: name, password: "#{name}#{name}")
@@ -17,15 +17,21 @@ end
 
 MESSAGES = [
   'Voted for Bernie Sanders',
-  'Enjoys playing recreational squash at the UC Berkeley RSF',
-  'Would like to travel to Iceland and Brazil',
-  'Grew up in San Diego',
-  'Would like to ride a bicycle across the United States',
-  'Believes in more stingent environmental regulations',
-  'Needs to update my Instagram and Twitter accounts',
-  'Had a relaxing summer and also learned to program',
-  'Enjoys listening to jazz and classical music',
-  'Is looking for a job as a front-end developer',
+  'Plays squash and badminton at the UC Berkeley RSF',
+  'Would like to visit Iceland',
+  'Grew up in San Diego, currently resides in the East Bay',
+  'Would like to visit all 50 States',
+  'Need to update my Instagram and Twitter accounts',
+  'Listens to NPR, jazz and classical radio stations',
+  'Training to become a front-end web developer',
+  'Graduated from UC Davis in 2013',
+  'Worked at Alta Bates as a medical scribe',
+  'Keeps to a mostly vegetarian diet',
+  'Photographed eight weddings this summer',
+  'Uses Tiles to track my wallet and keys',
+  'Drives a Volvo station wagon',
+  "Favorite websites are Craigslist, Google, and the NYTimes",
+  "Cooks a decent mushroom risotto"
 ]
 
 User.all.each do |user|

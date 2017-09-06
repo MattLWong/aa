@@ -84,4 +84,20 @@ form.logout-form {
 a.fetch-more {
   margin-top: 16px;
   display: block;
+  text-decoration: none;
+}
+
+ul.mentions {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+ul.mentions li {
+  float: left
+}
+
+ul.mentions li a {
+  display: block:run-in;
+  padding: 4px;
 }
