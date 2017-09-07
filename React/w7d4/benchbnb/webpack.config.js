@@ -13,7 +13,7 @@ module.exports = {
   module: {
     loaders: [
       {
-        test: /\.jsx?$/,
+        test: [/\.jsx?$/, /\.js?$/],
         exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
@@ -22,5 +22,5 @@ module.exports = {
       }
     ]
   },
-  devtool: 'source-maps',
+  devtool: 'source-maps'
 };

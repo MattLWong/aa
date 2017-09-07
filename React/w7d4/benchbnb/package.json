@@ -1,5 +1,5 @@
 {
-  "name": "benchbnb",
+  "name": "BenchBNB",
   "private": true,
   "dependencies": {
     "babel-core": "^6.26.0",
@@ -12,8 +12,7 @@
     "react-router-dom": "^4.2.2",
     "redux": "^3.7.2",
     "redux-logger": "^3.0.6",
-    "redux-thunk": "^2.2.0",
-    "webpack": "^3.5.5"
+    "webpack": "^3.5.6"
   },
   "description": "This README would normally document whatever steps are necessary to get the application up and running.",
   "version": "1.0.0",
@@ -22,7 +21,7 @@
     "test": "test"
   },
   "scripts": {
-    "webpack": "webpack --watch",
+    "webpack": "weback --watch",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
