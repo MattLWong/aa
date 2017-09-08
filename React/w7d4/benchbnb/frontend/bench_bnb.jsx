@@ -22,3 +22,7 @@ import { login, logout, signup } from './actions/session_actions';
 window.login = login;
 window.logout = logout;
 window.signup = signup
+
+import { fetchBenches } from './actions/bench_actions';
+
+window.fetchBenches = fetchBenches;

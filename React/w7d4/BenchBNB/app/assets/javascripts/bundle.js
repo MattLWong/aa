@@ -9758,6 +9758,8 @@ var _root2 = _interopRequireDefault(_root);
 
 var _session_actions = __webpack_require__(239);
 
+var _bench_actions = __webpack_require__(379);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 document.addEventListener('DOMContentLoaded', function () {
@@ -9777,6 +9779,8 @@ document.addEventListener('DOMContentLoaded', function () {
 window.login = _session_actions.login;
 window.logout = _session_actions.logout;
 window.signup = _session_actions.signup;
+
+window.fetchBenches = _bench_actions.fetchBenches;
 
 /***/ }),
 /* 82 */
@@ -23522,10 +23526,20 @@ var _session_reducer = __webpack_require__(209);
 
 var _session_reducer2 = _interopRequireDefault(_session_reducer);
 
+var _benches_reducer = __webpack_require__(381);
+
+var _benches_reducer2 = _interopRequireDefault(_benches_reducer);
+
+var _filters_reducer = __webpack_require__(398);
+
+var _filters_reducer2 = _interopRequireDefault(_filters_reducer);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var rootReducer = (0, _redux.combineReducers)({
-  session: _session_reducer2.default
+  session: _session_reducer2.default,
+  filters: _filters_reducer2.default,
+  benches: _benches_reducer2.default
 });
 
 exports.default = rootReducer;
@@ -26627,36 +26641,9 @@ module.exports = isIterateeCall;
 /***/ }),
 /* 307 */,
 /* 308 */
-/***/ (function(module, exports, __webpack_require__) {
+/***/ (function(module, exports) {
 
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-var signup = exports.signup = function signup(user) {
-  return $.ajax({
-    url: 'api/user',
-    method: 'POST',
-    data: user
-  });
-};
-
-var login = exports.login = function login(user) {
-  return $.ajax({
-    url: 'api/session',
-    method: "POST",
-    data: user
-  });
-};
-
-var logout = exports.logout = function logout() {
-  return $.ajax({
-    url: "api/session",
-    method: "DELETE"
-  });
-};
+throw new Error("Module build failed: SyntaxError: Unexpected token, expected , (20:4)\n\n\u001b[0m \u001b[90m 18 | \u001b[39m  $\u001b[33m.\u001b[39majax({\n \u001b[90m 19 | \u001b[39m    method\u001b[33m:\u001b[39m \u001b[32m\"DELETE\"\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 20 | \u001b[39m    url\u001b[33m:\u001b[39m \u001b[32m\"/api/session\"\u001b[39m\u001b[33m,\u001b[39m\n \u001b[90m    | \u001b[39m    \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 21 | \u001b[39m  })\n \u001b[90m 22 | \u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m 23 | \u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 309 */
@@ -32292,15 +32279,19 @@ var _react2 = _interopRequireDefault(_react);
 
 var _reactRouterDom = __webpack_require__(346);
 
-var _greeting_container = __webpack_require__(373);
+var _greeting_container = __webpack_require__(382);
 
 var _greeting_container2 = _interopRequireDefault(_greeting_container);
 
-var _session_form_container = __webpack_require__(375);
+var _session_form_container = __webpack_require__(384);
 
 var _session_form_container2 = _interopRequireDefault(_session_form_container);
 
 var _route_util = __webpack_require__(378);
+
+var _search_container = __webpack_require__(392);
+
+var _search_container2 = _interopRequireDefault(_search_container);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -32319,14 +32310,253 @@ var App = function App() {
       _react2.default.createElement(_greeting_container2.default, null)
     ),
     _react2.default.createElement(_route_util.AuthRoute, { path: '/login', component: _session_form_container2.default }),
-    _react2.default.createElement(_route_util.AuthRoute, { path: '/signup', component: _session_form_container2.default })
+    _react2.default.createElement(_route_util.AuthRoute, { path: '/signup', component: _session_form_container2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _search_container2.default })
   );
 };
 
 exports.default = App;
 
 /***/ }),
-/* 373 */
+/* 373 */,
+/* 374 */,
+/* 375 */,
+/* 376 */,
+/* 377 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__ = __webpack_require__(352);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Prompt__ = __webpack_require__(358);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(360);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(332);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(319);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StaticRouter__ = __webpack_require__(366);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Switch__ = __webpack_require__(368);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__matchPath__ = __webpack_require__(320);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_7__matchPath__["a"]; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__withRouter__ = __webpack_require__(371);
+/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_8__withRouter__["a"]; });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/***/ }),
+/* 378 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.ProtectedRoute = exports.AuthRoute = undefined;
+
+var _react = __webpack_require__(82);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRedux = __webpack_require__(335);
+
+var _reactRouter = __webpack_require__(377);
+
+var _reactRouterDom = __webpack_require__(346);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var Auth = function Auth(_ref) {
+  var Component = _ref.component,
+      path = _ref.path,
+      loggedIn = _ref.loggedIn;
+
+  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
+      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouter.Redirect, { to: '/' });
+    } });
+};
+
+var Protected = function Protected(_ref2) {
+  var Component = _ref2.component,
+      path = _ref2.path,
+      loggedIn = _ref2.loggedIn;
+  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
+      return loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouter.Redirect, { to: '/login' });
+    } });
+};
+
+var mapStateToProps = function mapStateToProps(state) {
+  return {
+    loggedIn: Boolean(state.session.currentUser)
+  };
+};
+
+var AuthRoute = exports.AuthRoute = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Auth));
+
+var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Protected));
+
+/***/ }),
+/* 379 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.createBench = exports.fetchBench = exports.fetchBenches = exports.createREview = exports.receiveBench = exports.receiveBenches = exports.RECEIVE_REVIEW = exports.RECEIVE_BENCH = exports.RECEIVE_BENCHES = undefined;
+
+var _bench_api_util = __webpack_require__(380);
+
+var APIUtil = _interopRequireWildcard(_bench_api_util);
+
+function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
+
+var RECEIVE_BENCHES = exports.RECEIVE_BENCHES = "RECEIVE_BENCHES";
+var RECEIVE_BENCH = exports.RECEIVE_BENCH = "RECEIVE_BENCH";
+var RECEIVE_REVIEW = exports.RECEIVE_REVIEW = "RECEIVE_REVIEW";
+
+var receiveBenches = exports.receiveBenches = function receiveBenches(benches) {
+  return {
+    type: RECEIVE_BENCHES,
+    benches: benches
+  };
+};
+
+var receiveBench = exports.receiveBench = function receiveBench(bench) {
+  return {
+    type: RECEIVE_BENCH,
+    bench: bench
+  };
+};
+
+var createREview = exports.createREview = function createREview(review) {
+  return function (dispatch) {
+    return APIUtil.createReview(review).then(function (review) {
+      return dispatch(receiveReview(review));
+    });
+  };
+};
+
+var fetchBenches = exports.fetchBenches = function fetchBenches(filters) {
+  return function (dispatch) {
+    APIUtil.fetchBenches(filters).then(function (res) {
+      return dispatch(receiveBenches(res));
+    });
+  };
+};
+
+var fetchBench = exports.fetchBench = function fetchBench(id) {
+  return function (dispatch) {
+    return APIUtil.fetchBench(id).then(function (bench) {
+      return dispatch(receiveBench(bench));
+    });
+  };
+};
+
+var createBench = exports.createBench = function createBench(bench) {
+  return function (dispatch) {
+    return APIUtil.createBench(bench).then(function (bench) {
+      return dispatch(receiveBench(bench));
+    });
+  };
+};
+
+/***/ }),
+/* 380 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+var fetchBenches = exports.fetchBenches = function fetchBenches(data) {
+  return $.ajax({
+    method: "GET",
+    url: 'api/benches',
+    data: data
+  });
+};
+
+var fetchBench = exports.fetchBench = function fetchBench(id) {
+  return $.ajax({
+    method: "GET",
+    uril: "api/benches/" + id
+  });
+};
+
+var createReview = exports.createReview = function createReview(data) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/reviews',
+    data: data
+  });
+};
+
+var createBench = exports.createBench = function createBench(data) {
+  return $.ajax({
+    method: 'POST',
+    url: 'api/benches',
+    data: data
+  });
+};
+
+/***/ }),
+/* 381 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _bench_actions = __webpack_require__(379);
+
+var benchesReducer = function benchesReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var action = arguments[1];
+
+  Object.freeze(state);
+
+  switch (action.type) {
+    case _bench_actions.RECEIVE_BENCHES:
+      return action.benches;
+    default:
+      return state;
+  }
+};
+
+exports.default = benchesReducer;
+
+/***/ }),
+/* 382 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32338,7 +32568,9 @@ Object.defineProperty(exports, "__esModule", {
 
 var _reactRedux = __webpack_require__(335);
 
-var _greeting = __webpack_require__(374);
+var _session_actions = __webpack_require__(239);
+
+var _greeting = __webpack_require__(383);
 
 var _greeting2 = _interopRequireDefault(_greeting);
 
@@ -32351,13 +32583,17 @@ var mapStateToProps = function mapStateToProps(state) {
 };
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
-  return {};
+  return {
+    logout: function logout() {
+      return dispatch((0, _session_actions.logout)());
+    }
+  };
 };
 
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_greeting2.default);
 
 /***/ }),
-/* 374 */
+/* 383 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32375,41 +32611,53 @@ var _reactRouterDom = __webpack_require__(346);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Greeting = function Greeting(_ref) {
-  var currentUser = _ref.currentUser;
-
-  var greeting = void 0;
-  if (currentUser) {
-    greeting = 'Welcome, ' + currentUser.username + '!';
-  } else {
-    greeting = _react2.default.createElement(
-      'div',
-      null,
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/signup' },
-        'Sign Up'
-      ),
-      _react2.default.createElement('br', null),
-      _react2.default.createElement(
-        _reactRouterDom.Link,
-        { to: '/login' },
-        'Log In'
-      )
-    );
-  }
-
+var sessionLinks = function sessionLinks() {
   return _react2.default.createElement(
-    'div',
-    null,
-    greeting
+    'nav',
+    { className: 'login-signup' },
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/login' },
+      'Login'
+    ),
+    '\xA0or\xA0',
+    _react2.default.createElement(
+      _reactRouterDom.Link,
+      { to: '/signup' },
+      'Sign up!'
+    )
   );
+};
+
+var personalGreeting = function personalGreeting(currentUser, logout) {
+  return _react2.default.createElement(
+    'hgroup',
+    { className: 'header-group' },
+    _react2.default.createElement(
+      'h2',
+      { className: 'header-name' },
+      'Hi, ',
+      currentUser.username,
+      '!'
+    ),
+    _react2.default.createElement(
+      'button',
+      { className: 'header-button', onClick: logout },
+      'Log Out'
+    )
+  );
+};
+
+var Greeting = function Greeting(_ref) {
+  var currentUser = _ref.currentUser,
+      logout = _ref.logout;
+  return currentUser ? personalGreeting(currentUser, logout) : sessionLinks();
 };
 
 exports.default = Greeting;
 
 /***/ }),
-/* 375 */
+/* 384 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32423,7 +32671,7 @@ var _reactRedux = __webpack_require__(335);
 
 var _session_actions = __webpack_require__(239);
 
-var _session_form = __webpack_require__(376);
+var _session_form = __webpack_require__(385);
 
 var _session_form2 = _interopRequireDefault(_session_form);
 
@@ -32462,7 +32710,7 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch, ownProps) {
 exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_session_form2.default);
 
 /***/ }),
-/* 376 */
+/* 385 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32623,50 +32871,23 @@ var SessionForm = function (_React$Component) {
 exports.default = (0, _reactRouterDom.withRouter)(SessionForm);
 
 /***/ }),
-/* 377 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
+/* 386 */,
+/* 387 */,
+/* 388 */,
+/* 389 */,
+/* 390 */,
+/* 391 */,
+/* 392 */
+/***/ (function(module, exports) {
 
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__ = __webpack_require__(352);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "MemoryRouter", function() { return __WEBPACK_IMPORTED_MODULE_0__MemoryRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__Prompt__ = __webpack_require__(358);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Prompt", function() { return __WEBPACK_IMPORTED_MODULE_1__Prompt__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__Redirect__ = __webpack_require__(360);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Redirect", function() { return __WEBPACK_IMPORTED_MODULE_2__Redirect__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__Route__ = __webpack_require__(332);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Route", function() { return __WEBPACK_IMPORTED_MODULE_3__Route__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__Router__ = __webpack_require__(319);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Router", function() { return __WEBPACK_IMPORTED_MODULE_4__Router__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__StaticRouter__ = __webpack_require__(366);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "StaticRouter", function() { return __WEBPACK_IMPORTED_MODULE_5__StaticRouter__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__Switch__ = __webpack_require__(368);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "Switch", function() { return __WEBPACK_IMPORTED_MODULE_6__Switch__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__matchPath__ = __webpack_require__(320);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "matchPath", function() { return __WEBPACK_IMPORTED_MODULE_7__matchPath__["a"]; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__withRouter__ = __webpack_require__(371);
-/* harmony reexport (binding) */ __webpack_require__.d(__webpack_exports__, "withRouter", function() { return __WEBPACK_IMPORTED_MODULE_8__withRouter__["a"]; });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+throw new Error("Module build failed: Error: ENOENT: no such file or directory, open '/Users/MatthewWong/Desktop/aa/React/w7d4/BenchBNB/frontend/components/search_container.js'\n    at Error (native)");
 
 /***/ }),
-/* 378 */
+/* 393 */,
+/* 394 */,
+/* 395 */,
+/* 396 */,
+/* 397 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
@@ -32675,38 +32896,68 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AuthRoute = undefined;
+exports.updateFilter = exports.changeFilter = exports.UPDATE_FILTER = undefined;
 
-var _react = __webpack_require__(82);
+var _bench_actions = __webpack_require__(379);
 
-var _react2 = _interopRequireDefault(_react);
+var UPDATE_FILTER = exports.UPDATE_FILTER = 'UPDATE_FILTER';
 
-var _reactRedux = __webpack_require__(335);
-
-var _reactRouter = __webpack_require__(377);
-
-var _reactRouterDom = __webpack_require__(346);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var Auth = function Auth(_ref) {
-  var Component = _ref.component,
-      path = _ref.path,
-      loggedIn = _ref.loggedIn;
-
-
-  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
-      return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouter.Redirect, { to: '/' });
-    } });
-};
-
-var mapStateToProps = function mapStateToProps(state) {
+var changeFilter = exports.changeFilter = function changeFilter(filter, value) {
   return {
-    loggedIn: Boolean(state.session.currentUser)
+    type: UPDATE_FILTER,
+    filter: filter,
+    value: value
   };
 };
 
-var AuthRoute = exports.AuthRoute = (0, _reactRouter.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Auth));
+var updateFilter = exports.updateFilter = function updateFilter(filter, value) {
+  return function (dispatch, getState) {
+    dispatch(changeFilter(filter, value));
+    return (0, _bench_actions.fetchBenches)(getState().filters)(dispatch);
+  };
+};
+
+/***/ }),
+/* 398 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _merge = __webpack_require__(240);
+
+var _merge2 = _interopRequireDefault(_merge);
+
+var _filter_actions = __webpack_require__(397);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var defaultFilters = Object.freeze({
+  bounds: {},
+  minSeating: 1,
+  maxSeating: 10
+});
+
+var FiltersReducer = function FiltersReducer() {
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultFilters;
+  var action = arguments[1];
+
+  Object.freeze(state);
+  if (action.type === _filter_actions.UPDATE_FILTER) {
+    var newFilter = _defineProperty({}, action.filter, action.value);
+    return (0, _merge2.default)({}, state, newFilter);
+  } else {
+    return state;
+  }
+};
+
+exports.default = FiltersReducer;
 
 /***/ })
 /******/ ]);
