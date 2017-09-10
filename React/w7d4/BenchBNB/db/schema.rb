@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20170908153949) do
+ActiveRecord::Schema.define(version: 20170908230735) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -21,6 +21,27 @@ ActiveRecord::Schema.define(version: 20170908153949) do
     t.float "lng", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "seating", default: 2, null: false
+    t.string "picture_url"
+  end
+
+  create_table "favorites", force: :cascade do |t|
+    t.integer "user_id", null: false
+    t.integer "bench_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bench_id", "user_id"], name: "index_favorites_on_bench_id_and_user_id", unique: true
+    t.index ["bench_id"], name: "index_favorites_on_bench_id"
+    t.index ["user_id"], name: "index_favorites_on_user_id"
+  end
+
+  create_table "reviews", force: :cascade do |t|
+    t.string "body", default: "", null: false
+    t.integer "rating", null: false
+    t.integer "bench_id", null: false
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.index ["bench_id"], name: "index_reviews_on_bench_id"
   end
 
   create_table "users", force: :cascade do |t|

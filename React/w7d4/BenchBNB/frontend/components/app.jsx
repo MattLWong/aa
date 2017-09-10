@@ -1,19 +1,36 @@
 import React from 'react';
-import { Route } from 'react-router-dom';
+import { Provider } from 'react-redux'
+import {
+  Route,
+  Redirect,
+  Switch,
+  Link,
+  HashRouter
+} from 'react-router-dom';
+
 import GreetingContainer from './greeting/greeting_container';
-import SessionFormContainer from './session/session_form_container';
-import { AuthRoute } from '../util/route_util';
-import SearchContainer from './search_container';
+import SessionFormContainer from './session_form/session_form_container';
+import SearchContainer from './search/search_container';
+import BenchShowContainer from './bench_show/bench_show_container';
+import BenchFormContainer from './bench_form/bench_form_container';
+import { AuthRoute, ProtectedRoute } from '../util/route_util';
+
 
 const App = () => (
   <div>
     <header>
-      <h1>Bench BnB</h1>
+      <Link to="/" className="header-link">
+        <h1>Bench BnB</h1>
+      </Link>
       <GreetingContainer />
     </header>
-    <AuthRoute path="/login" component={SessionFormContainer} />
-    <AuthRoute path="/signup" component={SessionFormContainer} />
-    <Route exact path="/" component={SearchContainer}/>
+    <Switch>
+      <AuthRoute path="/login" component={SessionFormContainer} />
+      <AuthRoute path="/signup" component={SessionFormContainer} />
+      <ProtectedRoute path="/benches/new" component={BenchFormContainer} />
+      <Route path="/benches/:benchId" component={SearchContainer} />
+      <Route exact path="/" component={SearchContainer} />
+    </Switch>
   </div>
 );
 
