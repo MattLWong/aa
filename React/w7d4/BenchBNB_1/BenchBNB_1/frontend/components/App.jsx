@@ -1,10 +1,11 @@
-import React from 'react'
+import React from 'react';
 import {
   Route
-} from 'react-router-dom'
-import GreetingContainer from './greeting/greeting_container'
-import SessionFormContainer from './session_form/session_form_container'
-import { AuthRoute } from '../util/route_util'
+} from 'react-router-dom';
+import GreetingContainer from './greeting/greeting_container';
+import SessionFormContainer from './session_form/session_form_container';
+import { AuthRoute } from '../util/route_util';
+import SearchContainer from './search/search_container';
 
 const App = () => (
   <div>
@@ -12,6 +13,7 @@ const App = () => (
     <GreetingContainer/>
     <AuthRoute path="/login" component={SessionFormContainer} />
     <AuthRoute path="/signup" component={SessionFormContainer} />
+    <Route exact path='/' component={SearchContainer} />
   </div>
 )
 

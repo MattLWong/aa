@@ -3,9 +3,10 @@ import { Route, withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
 const Auth = ({ component: Component, path, loggedIn }) => {
+  // debugger;
   return(
     <Route path={path} render={ (props) => {
-        debugger;
+        // debugger;
         return(
             !loggedIn ? (
               <Component {...props} />
