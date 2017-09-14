@@ -30889,6 +30889,10 @@ var _search_container = __webpack_require__(383);
 
 var _search_container2 = _interopRequireDefault(_search_container);
 
+var _bench_form_container = __webpack_require__(390);
+
+var _bench_form_container2 = _interopRequireDefault(_bench_form_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -30903,6 +30907,7 @@ var App = function App() {
     _react2.default.createElement(_greeting_container2.default, null),
     _react2.default.createElement(_route_util.AuthRoute, { path: '/login', component: _session_form_container2.default }),
     _react2.default.createElement(_route_util.AuthRoute, { path: '/signup', component: _session_form_container2.default }),
+    _react2.default.createElement(_route_util.ProtectedRoute, { path: '/benches/new', component: _bench_form_container2.default }),
     _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _search_container2.default })
   );
 };
@@ -33946,7 +33951,7 @@ exports['default'] = thunk;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.AuthRoute = undefined;
+exports.ProtectedRoute = exports.AuthRoute = undefined;
 
 var _react = __webpack_require__(6);
 
@@ -33970,14 +33975,84 @@ var Auth = function Auth(_ref) {
     } });
 };
 
+var Pro = function Pro(_ref2) {
+  var Component = _ref2.component,
+      path = _ref2.path,
+      loggedIn = _ref2.loggedIn;
+
+  return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
+      return !loggedIn ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' }) : _react2.default.createElement(Component, props);
+    } });
+};
+
 var mapStateToProps = function mapStateToProps(state) {
   return { loggedIn: Boolean(state.session.currentUser) };
 };
 
 var AuthRoute = exports.AuthRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Auth));
+var ProtectedRoute = exports.ProtectedRoute = (0, _reactRouterDom.withRouter)((0, _reactRedux.connect)(mapStateToProps, null)(Pro));
 
 /***/ }),
-/* 377 */,
+/* 377 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+exports.withRouter = exports.matchPath = exports.Switch = exports.StaticRouter = exports.Router = exports.Route = exports.Redirect = exports.Prompt = exports.MemoryRouter = undefined;
+
+var _MemoryRouter2 = __webpack_require__(278);
+
+var _MemoryRouter3 = _interopRequireDefault(_MemoryRouter2);
+
+var _Prompt2 = __webpack_require__(284);
+
+var _Prompt3 = _interopRequireDefault(_Prompt2);
+
+var _Redirect2 = __webpack_require__(286);
+
+var _Redirect3 = _interopRequireDefault(_Redirect2);
+
+var _Route2 = __webpack_require__(130);
+
+var _Route3 = _interopRequireDefault(_Route2);
+
+var _Router2 = __webpack_require__(77);
+
+var _Router3 = _interopRequireDefault(_Router2);
+
+var _StaticRouter2 = __webpack_require__(292);
+
+var _StaticRouter3 = _interopRequireDefault(_StaticRouter2);
+
+var _Switch2 = __webpack_require__(294);
+
+var _Switch3 = _interopRequireDefault(_Switch2);
+
+var _matchPath2 = __webpack_require__(78);
+
+var _matchPath3 = _interopRequireDefault(_matchPath2);
+
+var _withRouter2 = __webpack_require__(297);
+
+var _withRouter3 = _interopRequireDefault(_withRouter2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+exports.MemoryRouter = _MemoryRouter3.default;
+exports.Prompt = _Prompt3.default;
+exports.Redirect = _Redirect3.default;
+exports.Route = _Route3.default;
+exports.Router = _Router3.default;
+exports.StaticRouter = _StaticRouter3.default;
+exports.Switch = _Switch3.default;
+exports.matchPath = _matchPath3.default;
+exports.withRouter = _withRouter3.default;
+
+/***/ }),
 /* 378 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -33995,6 +34070,14 @@ var fetchBenches = exports.fetchBenches = function fetchBenches(data) {
   });
 };
 
+var createBench = exports.createBench = function createBench(data) {
+  return $.ajax({
+    method: "POST",
+    url: "/api/benches",
+    data: data
+  });
+};
+
 /***/ }),
 /* 379 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -34005,7 +34088,7 @@ var fetchBenches = exports.fetchBenches = function fetchBenches(data) {
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.receiveBenches = exports.fetchBenches = exports.RECEIVE_BENCHES = undefined;
+exports.receiveBench = exports.receiveBenches = exports.createBench = exports.fetchBenches = exports.RECEIVE_BENCH = exports.RECEIVE_BENCHES = undefined;
 
 var _bench_api_util = __webpack_require__(378);
 
@@ -34014,6 +34097,7 @@ var APIUtil = _interopRequireWildcard(_bench_api_util);
 function _interopRequireWildcard(obj) { if (obj && obj.__esModule) { return obj; } else { var newObj = {}; if (obj != null) { for (var key in obj) { if (Object.prototype.hasOwnProperty.call(obj, key)) newObj[key] = obj[key]; } } newObj.default = obj; return newObj; } }
 
 var RECEIVE_BENCHES = exports.RECEIVE_BENCHES = "RECEIVE_BENCHES";
+var RECEIVE_BENCH = exports.RECEIVE_BENCH = "RECEIVE_BENCH";
 
 var fetchBenches = exports.fetchBenches = function fetchBenches(data) {
   return function (dispatch) {
@@ -34023,10 +34107,25 @@ var fetchBenches = exports.fetchBenches = function fetchBenches(data) {
   };
 };
 
+var createBench = exports.createBench = function createBench(data) {
+  return function (dispatch) {
+    APIUtil.createBench(data).then(function (res) {
+      return dispatch(receiveBench(res));
+    });
+  };
+};
+
 var receiveBenches = exports.receiveBenches = function receiveBenches(benches) {
   return {
     type: RECEIVE_BENCHES,
     benches: benches
+  };
+};
+
+var receiveBench = exports.receiveBench = function receiveBench(bench) {
+  return {
+    type: RECEIVE_BENCH,
+    bench: bench
   };
 };
 
@@ -34264,6 +34363,8 @@ var _marker_manager = __webpack_require__(387);
 
 var _marker_manager2 = _interopRequireDefault(_marker_manager);
 
+var _reactRouterDom = __webpack_require__(43);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34306,11 +34407,24 @@ var BenchMap = function (_React$Component) {
           southWest: { lat: south, lng: west } };
         _this2.props.updateFilter(bounds);
       });
+      google.maps.event.addListener(this.map, "click", function (event) {
+        var coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+        _this2.handleClick(coords);
+      });
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
+      console.log("Bench Map did update");
       this.MarkerManager.updateMarkers(this.props.benches);
+    }
+  }, {
+    key: 'handleClick',
+    value: function handleClick(coords) {
+      this.props.history.push({
+        pathname: "benches/new",
+        search: 'lat=' + coords.lat + '&lng=' + coords.lng
+      });
     }
   }, {
     key: 'render',
@@ -34326,7 +34440,7 @@ var BenchMap = function (_React$Component) {
   return BenchMap;
 }(_react2.default.Component);
 
-exports.default = BenchMap;
+exports.default = (0, _reactRouterDom.withRouter)(BenchMap);
 
 /***/ }),
 /* 387 */
@@ -34361,14 +34475,13 @@ var MarkerManager = function () {
         console.log("iterating through each bench...");
         var bench = benches[key];
         if (!Object.keys(this.markers).includes(key)) {
-          console.log("Adding to markers!");
+          console.log("Adding bench to markers object!");
           this.createMarkerFromBench(bench);
         }
       }
+
       for (var _key in this.markers) {
-        debugger;
         if (!Object.keys(benches).includes(_key)) {
-          console.log("removing marker");
           this.removeMarker(this.markers[_key]);
         }
       }
@@ -34380,15 +34493,18 @@ var MarkerManager = function () {
       var marker = new google.maps.Marker({
         position: position,
         map: this.map,
-        benchId: bench.id
+        id: bench.id
       });
+      this.markers[bench.id] = marker;
     }
   }, {
     key: "removeMarker",
     value: function removeMarker(marker) {
       console.log("a marker was deleted");
-      this.markers[marker.benchId].setMap(null);
-      delete this.markers[marker.benchId];
+      this.markers[marker.id].setMap(null);
+      delete this.markers[marker.id];
+      // this.markers[marker.id].setMap(null);
+      // delete this.markers[marker.benchId];
     }
   }]);
 
@@ -34461,6 +34577,170 @@ var FilterReducer = function FilterReducer() {
 };
 
 exports.default = FilterReducer;
+
+/***/ }),
+/* 390 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(70);
+
+var _bench_form = __webpack_require__(391);
+
+var _bench_form2 = _interopRequireDefault(_bench_form);
+
+var _bench_actions = __webpack_require__(379);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, _ref) {
+  var location = _ref.location;
+
+  return {
+    lat: new URLSearchParams(location.search).get("lat"),
+    lng: new URLSearchParams(location.search).get("lng")
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {
+    createBench: function createBench(bench) {
+      return dispatch((0, _bench_actions.createBench)(bench));
+    }
+  };
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_bench_form2.default);
+
+/***/ }),
+/* 391 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _reactRouter = __webpack_require__(377);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var BenchForm = function (_React$Component) {
+  _inherits(BenchForm, _React$Component);
+
+  function BenchForm(props) {
+    _classCallCheck(this, BenchForm);
+
+    var _this = _possibleConstructorReturn(this, (BenchForm.__proto__ || Object.getPrototypeOf(BenchForm)).call(this, props));
+
+    _this.state = {
+      description: "",
+      seating: 2,
+      lat: _this.props.lat,
+      lng: _this.props.lng
+    };
+
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
+    return _this;
+  }
+
+  _createClass(BenchForm, [{
+    key: 'handleSubmit',
+    value: function handleSubmit(e) {
+      e.preventDefault();
+      debugger;
+      this.props.createBench({ bench: this.state });
+      this.props.history.push('/');
+    }
+  }, {
+    key: 'handle',
+    value: function handle(property) {
+      var _this2 = this;
+
+      return function (e) {
+        _this2.setState(_defineProperty({}, property, e.target.value));
+      };
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      return _react2.default.createElement(
+        'form',
+        { onSubmit: this.handleSubmit },
+        _react2.default.createElement(
+          'label',
+          null,
+          'Description',
+          _react2.default.createElement('input', {
+            type: 'text',
+            value: this.state.description,
+            onChange: this.handle("description")
+          })
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Number of seats',
+          _react2.default.createElement('input', {
+            type: 'number',
+            min: '1',
+            step: '1',
+            value: this.state.seating,
+            onChange: this.handle("seating")
+          })
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Latitude',
+          _react2.default.createElement('input', {
+            type: 'number',
+            disabled: true,
+            value: this.state.lat
+
+          })
+        ),
+        _react2.default.createElement(
+          'label',
+          null,
+          'Longitude',
+          _react2.default.createElement('input', {
+            type: 'number',
+            disabled: true,
+            value: this.state.lng
+          })
+        ),
+        _react2.default.createElement('input', { type: 'submit', value: 'Submit' })
+      );
+    }
+  }]);
+
+  return BenchForm;
+}(_react2.default.Component);
+
+exports.default = BenchForm;
 
 /***/ })
 /******/ ]);

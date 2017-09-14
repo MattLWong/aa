@@ -10,14 +10,13 @@ export default class MarkerManager {
       console.log("iterating through each bench...");
       let bench = benches[key];
       if (!Object.keys(this.markers).includes(key)) {
-        console.log("Adding to markers!");
+        console.log("Adding bench to markers object!");
         this.createMarkerFromBench(bench);
       }
     }
+
     for (let key in this.markers) {
-      debugger;
        if (!Object.keys(benches).includes(key)) {
-         console.log("removing marker");
          this.removeMarker(this.markers[key]);
        }
     }
@@ -28,13 +27,16 @@ export default class MarkerManager {
     const marker = new google.maps.Marker({
       position,
       map: this.map,
-      benchId: bench.id
-    })
+      id: bench.id
+    });
+    this.markers[bench.id] = marker;
   }
 
   removeMarker(marker) {
     console.log("a marker was deleted");
-    this.markers[marker.benchId].setMap(null);
-    delete this.markers[marker.benchId];
+    this.markers[marker.id].setMap(null);
+    delete this.markers[marker.id];
+    // this.markers[marker.id].setMap(null);
+    // delete this.markers[marker.benchId];
   }
 }

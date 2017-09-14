@@ -5,3 +5,11 @@ export const fetchBenches = data => (
     data
   })
 )
+
+export const createBench = data => (
+  $.ajax({
+    method: "POST",
+    url: "/api/benches",
+    data
+  })
+)
