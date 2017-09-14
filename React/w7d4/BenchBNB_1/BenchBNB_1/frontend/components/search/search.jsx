@@ -9,13 +9,13 @@ class Search extends React.Component {
   }
 
   render() {
-    const { benches, fetchBenches } = this.props
-    debugger;
+    const { benches, fetchBenches, updateFilter } = this.props
     return(
       <div className="search">
         <BenchMap
           benches={benches}
-          fetchBenches={fetchBenches}/>
+          fetchBenches={fetchBenches}
+          updateFilter={updateFilter}/>
         <BenchIndex
           benches={benches}
           fetchBenches={fetchBenches}/>

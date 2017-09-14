@@ -1,5 +1,6 @@
 import { connect } from 'react-redux';
 import { fetchBenches } from '../../actions/bench_actions';
+import { updateFilter } from '../../actions/filter_actions';
 import Search from './search';
 
 const mapStateToProps = state => ({
@@ -7,7 +8,8 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchBenches: () => dispatch(fetchBenches())
+  fetchBenches: () => dispatch(fetchBenches()),
+  updateFilter: (bounds) => dispatch(updateFilter(bounds))
 })
 
 export default connect(
