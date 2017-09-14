@@ -34184,7 +34184,9 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mapStateToProps = function mapStateToProps(state) {
   return {
-    benches: state.benches
+    benches: state.benches,
+    minSeating: state.filters.minSeating,
+    maxSeating: state.filters.maxSeating
   };
 };
 
@@ -34193,8 +34195,8 @@ var mapDispatchToProps = function mapDispatchToProps(dispatch) {
     fetchBenches: function fetchBenches() {
       return dispatch((0, _bench_actions.fetchBenches)());
     },
-    updateFilter: function updateFilter(bounds) {
-      return dispatch((0, _filter_actions.updateFilter)(bounds));
+    updateFilter: function updateFilter(filter, value) {
+      return dispatch((0, _filter_actions.updateFilter)(filter, value));
     }
   };
 };
@@ -34298,6 +34300,10 @@ var _bench_index = __webpack_require__(384);
 
 var _bench_index2 = _interopRequireDefault(_bench_index);
 
+var _filter_form = __webpack_require__(392);
+
+var _filter_form2 = _interopRequireDefault(_filter_form);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -34330,6 +34336,11 @@ var Search = function (_React$Component) {
           benches: benches,
           fetchBenches: fetchBenches,
           updateFilter: updateFilter }),
+        _react2.default.createElement(_filter_form2.default, {
+          minSeating: this.props.minSeating,
+          maxSeating: this.props.maxSeating,
+          updateFilter: updateFilter
+        }),
         _react2.default.createElement(_bench_index2.default, {
           benches: benches,
           fetchBenches: fetchBenches })
@@ -34405,7 +34416,7 @@ var BenchMap = function (_React$Component) {
         var bounds = {
           northEast: { lat: north, lng: east },
           southWest: { lat: south, lng: west } };
-        _this2.props.updateFilter(bounds);
+        _this2.props.updateFilter("bounds", bounds);
       });
       google.maps.event.addListener(this.map, "click", function (event) {
         var coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
@@ -34523,23 +34534,24 @@ exports.default = MarkerManager;
 Object.defineProperty(exports, "__esModule", {
   value: true
 });
-exports.updateFilter = exports.updateBounds = exports.UPDATE_BOUNDS = undefined;
+exports.updateFilter = exports.changeFilter = exports.UPDATE_FILTER = undefined;
 
 var _bench_actions = __webpack_require__(379);
 
-var UPDATE_BOUNDS = exports.UPDATE_BOUNDS = "UPDATE_BOUNDS";
+var UPDATE_FILTER = exports.UPDATE_FILTER = "UPDATE_FILTER";
 
-var updateBounds = exports.updateBounds = function updateBounds(bounds) {
+var changeFilter = exports.changeFilter = function changeFilter(filter, value) {
   return {
-    type: UPDATE_BOUNDS,
-    bounds: bounds
+    type: UPDATE_FILTER,
+    filter: filter,
+    value: value
   };
 };
 
-var updateFilter = exports.updateFilter = function updateFilter(bounds, value) {
+var updateFilter = exports.updateFilter = function updateFilter(filter, value) {
   return function (dispatch, getState) {
-    dispatch(updateBounds(bounds));
-    return (0, _bench_actions.fetchBenches)({ bounds: getState().filters.bounds })(dispatch);
+    dispatch(changeFilter(filter, value));
+    return (0, _bench_actions.fetchBenches)(getState().filters)(dispatch);
   };
 };
 
@@ -34556,21 +34568,29 @@ Object.defineProperty(exports, "__esModule", {
 
 var _filter_actions = __webpack_require__(388);
 
-var _merge = __webpack_require__(307);
+var _merge2 = __webpack_require__(307);
 
-var _merge2 = _interopRequireDefault(_merge);
+var _merge3 = _interopRequireDefault(_merge2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
+var defaultState = Object.freeze({
+  bounds: {},
+  minSeating: 1,
+  maxSeating: 10
+});
+
 var FilterReducer = function FilterReducer() {
-  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : {};
+  var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : defaultState;
   var action = arguments[1];
 
   Object.freeze(state);
 
   switch (action.type) {
-    case _filter_actions.UPDATE_BOUNDS:
-      return (0, _merge2.default)({}, { bounds: action.bounds });
+    case _filter_actions.UPDATE_FILTER:
+      return (0, _merge3.default)({}, state, _defineProperty({}, action.filter, action.value));
     default:
       return state;
   }
@@ -34670,7 +34690,6 @@ var BenchForm = function (_React$Component) {
     key: 'handleSubmit',
     value: function handleSubmit(e) {
       e.preventDefault();
-      debugger;
       this.props.createBench({ bench: this.state });
       this.props.history.push('/');
     }
@@ -34741,6 +34760,93 @@ var BenchForm = function (_React$Component) {
 }(_react2.default.Component);
 
 exports.default = BenchForm;
+
+/***/ }),
+/* 392 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var handleChange = function handleChange(property, method) {
+  return function (e) {
+    return method(property, e.target.value);
+  };
+};
+
+var FilterForm = function FilterForm(_ref) {
+  var minSeating = _ref.minSeating,
+      maxSeating = _ref.maxSeating,
+      updateFilter = _ref.updateFilter;
+  return _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      "span",
+      { className: "filter" },
+      "Filter results:"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "label",
+      null,
+      "Min Seating:",
+      _react2.default.createElement("input", {
+        type: "number",
+        value: minSeating,
+        onChange: handleChange('minSeating', updateFilter)
+      })
+    ),
+    _react2.default.createElement(
+      "label",
+      null,
+      "Max Seating:",
+      _react2.default.createElement("input", {
+        type: "number",
+        value: maxSeating,
+        onChange: handleChange('maxSeating', updateFilter)
+      })
+    )
+  );
+};
+//
+// class FilterForm extends React.Component {
+//   constructor(props) {
+//     super(props)
+//     this.state = {
+//       minSeating: this.props.minSeating,
+//       maxSeating: this.props.maxSeating
+//     }
+//   }
+//
+//   update(property) {
+//     return e => {
+//       this.setState({[property]: e.target.value})
+//       this.props.updateFilter(property, this.state[property]);
+//     }
+//   }
+//
+//   render() {
+//     return(
+//         <div>
+//           <h3>Filter</h3>
+//
+//         </div>
+//     )
+//   }
+// }
+
+exports.default = FilterForm;
 
 /***/ })
 /******/ ]);

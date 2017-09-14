@@ -4,12 +4,14 @@ import { updateFilter } from '../../actions/filter_actions';
 import Search from './search';
 
 const mapStateToProps = state => ({
-  benches: state.benches
+  benches: state.benches,
+  minSeating: state.filters.minSeating,
+  maxSeating: state.filters.maxSeating
 })
 
 const mapDispatchToProps = dispatch => ({
   fetchBenches: () => dispatch(fetchBenches()),
-  updateFilter: (bounds) => dispatch(updateFilter(bounds))
+  updateFilter: (filter, value) => dispatch(updateFilter(filter, value))
 })
 
 export default connect(
