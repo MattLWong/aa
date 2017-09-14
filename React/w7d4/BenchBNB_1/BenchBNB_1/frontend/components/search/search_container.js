@@ -10,7 +10,6 @@ const mapStateToProps = state => ({
 })
 
 const mapDispatchToProps = dispatch => ({
-  fetchBenches: () => dispatch(fetchBenches()),
   updateFilter: (filter, value) => dispatch(updateFilter(filter, value))
 })
 

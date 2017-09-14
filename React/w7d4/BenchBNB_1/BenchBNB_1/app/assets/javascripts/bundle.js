@@ -30893,6 +30893,10 @@ var _bench_form_container = __webpack_require__(390);
 
 var _bench_form_container2 = _interopRequireDefault(_bench_form_container);
 
+var _bench_show_container = __webpack_require__(393);
+
+var _bench_show_container2 = _interopRequireDefault(_bench_show_container);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var App = function App() {
@@ -30908,7 +30912,8 @@ var App = function App() {
     _react2.default.createElement(_route_util.AuthRoute, { path: '/login', component: _session_form_container2.default }),
     _react2.default.createElement(_route_util.AuthRoute, { path: '/signup', component: _session_form_container2.default }),
     _react2.default.createElement(_route_util.ProtectedRoute, { path: '/benches/new', component: _bench_form_container2.default }),
-    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _search_container2.default })
+    _react2.default.createElement(_reactRouterDom.Route, { exact: true, path: '/', component: _search_container2.default }),
+    _react2.default.createElement(_reactRouterDom.Route, { path: '/benches/:id', component: _bench_show_container2.default })
   );
 };
 
@@ -34192,9 +34197,6 @@ var mapStateToProps = function mapStateToProps(state) {
 
 var mapDispatchToProps = function mapDispatchToProps(dispatch) {
   return {
-    fetchBenches: function fetchBenches() {
-      return dispatch((0, _bench_actions.fetchBenches)());
-    },
     updateFilter: function updateFilter(filter, value) {
       return dispatch((0, _filter_actions.updateFilter)(filter, value));
     }
@@ -34334,7 +34336,6 @@ var Search = function (_React$Component) {
         { className: 'search' },
         _react2.default.createElement(_bench_map2.default, {
           benches: benches,
-          fetchBenches: fetchBenches,
           updateFilter: updateFilter }),
         _react2.default.createElement(_filter_form2.default, {
           minSeating: this.props.minSeating,
@@ -34398,43 +34399,63 @@ var BenchMap = function (_React$Component) {
     value: function componentDidMount() {
       var _this2 = this;
 
-      var mapOptions = {
+      var defaultSF = {
         center: { lat: 37.7758, lng: -122.435 },
         zoom: 12
+      };
+      var bench = this.props.singleBench;
+      if (bench) {
+        var benchLocation = {
+          center: { lat: bench.lat, lng: bench.lng },
+          zoom: 17
+        };
+        this.map = new google.maps.Map(this.mapNode, benchLocation);
+        this.MarkerManager = new _marker_manager2.default(this.map);
+        this.MarkerManager.updateMarker(bench); //later change MM
+      } else {
+        this.map = new google.maps.Map(this.mapNode, defaultSF);
+        this.MarkerManager = new _marker_manager2.default(this.map, this.handleMarkerClick.bind(this));
+        this.MarkerManager.updateMarkers(this.props.benches);
+        google.maps.event.addListener(this.map, "idle", function () {
+          var _map$getBounds$toJSON = _this2.map.getBounds().toJSON(),
+              north = _map$getBounds$toJSON.north,
+              south = _map$getBounds$toJSON.south,
+              east = _map$getBounds$toJSON.east,
+              west = _map$getBounds$toJSON.west;
 
-        //what is this.mapNode? creates a new map inside the give HTML container
-      };this.map = new google.maps.Map(this.mapNode, mapOptions);
-      this.MarkerManager = new _marker_manager2.default(this.map);
-      this.MarkerManager.updateMarkers(this.props.benches);
-      google.maps.event.addListener(this.map, "idle", function () {
-        var _map$getBounds$toJSON = _this2.map.getBounds().toJSON(),
-            north = _map$getBounds$toJSON.north,
-            south = _map$getBounds$toJSON.south,
-            east = _map$getBounds$toJSON.east,
-            west = _map$getBounds$toJSON.west;
-
-        var bounds = {
-          northEast: { lat: north, lng: east },
-          southWest: { lat: south, lng: west } };
-        _this2.props.updateFilter("bounds", bounds);
-      });
-      google.maps.event.addListener(this.map, "click", function (event) {
-        var coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
-        _this2.handleClick(coords);
-      });
+          var bounds = {
+            northEast: { lat: north, lng: east },
+            southWest: { lat: south, lng: west } };
+          _this2.props.updateFilter("bounds", bounds);
+        });
+        google.maps.event.addListener(this.map, "click", function (event) {
+          var coords = { lat: event.latLng.lat(), lng: event.latLng.lng() };
+          _this2.handleClick(coords);
+        });
+      }
     }
   }, {
     key: 'componentDidUpdate',
     value: function componentDidUpdate() {
-      console.log("Bench Map did update");
-      this.MarkerManager.updateMarkers(this.props.benches);
+      if (!this.props.singleBench) {
+        this.MarkerManager.updateMarkers(this.props.benches);
+      }
     }
   }, {
     key: 'handleClick',
     value: function handleClick(coords) {
+      //why is bind not required here
       this.props.history.push({
         pathname: "benches/new",
         search: 'lat=' + coords.lat + '&lng=' + coords.lng
+      });
+    }
+  }, {
+    key: 'handleMarkerClick',
+    value: function handleMarkerClick(benchId) {
+      this.props.history.push({
+        pathname: 'benches/' + benchId,
+        bench: this.props.benches[benchId]
       });
     }
   }, {
@@ -34469,24 +34490,34 @@ var _createClass = function () { function defineProperties(target, props) { for 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 var MarkerManager = function () {
-  function MarkerManager(map) {
+  function MarkerManager(map, method) {
     _classCallCheck(this, MarkerManager);
 
     this.map = map;
     this.markers = {};
+    this.handleMarkerClick = method;
   }
 
-  //instance method
-
-
   _createClass(MarkerManager, [{
+    key: "updateMarker",
+    value: function updateMarker(bench) {
+      var position = new google.maps.LatLng(bench.lat, bench.lng);
+      var marker = new google.maps.Marker({
+        position: position,
+        map: this.map,
+        id: bench.id
+      });
+      this.markers[bench.id] = marker;
+    }
+
+    //instance method
+
+  }, {
     key: "updateMarkers",
     value: function updateMarkers(benches) {
       for (var key in benches) {
-        console.log("iterating through each bench...");
         var bench = benches[key];
         if (!Object.keys(this.markers).includes(key)) {
-          console.log("Adding bench to markers object!");
           this.createMarkerFromBench(bench);
         }
       }
@@ -34500,11 +34531,16 @@ var MarkerManager = function () {
   }, {
     key: "createMarkerFromBench",
     value: function createMarkerFromBench(bench) {
+      var that = this;
       var position = new google.maps.LatLng(bench.lat, bench.lng);
       var marker = new google.maps.Marker({
         position: position,
         map: this.map,
         id: bench.id
+      });
+      marker.addListener('click', function (event) {
+        console.log(marker.id);
+        that.handleMarkerClick(marker.id);
       });
       this.markers[bench.id] = marker;
     }
@@ -34514,8 +34550,6 @@ var MarkerManager = function () {
       console.log("a marker was deleted");
       this.markers[marker.id].setMap(null);
       delete this.markers[marker.id];
-      // this.markers[marker.id].setMap(null);
-      // delete this.markers[marker.benchId];
     }
   }]);
 
@@ -34847,6 +34881,74 @@ var FilterForm = function FilterForm(_ref) {
 // }
 
 exports.default = FilterForm;
+
+/***/ }),
+/* 393 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _reactRedux = __webpack_require__(70);
+
+var _bench_show = __webpack_require__(394);
+
+var _bench_show2 = _interopRequireDefault(_bench_show);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var mapStateToProps = function mapStateToProps(state, _ref) {
+  var location = _ref.location;
+
+  return {
+    benchId: location.pathname.slice(9),
+    bench: location.bench
+  };
+};
+
+var mapDispatchToProps = function mapDispatchToProps(dispatch) {
+  return {};
+};
+
+exports.default = (0, _reactRedux.connect)(mapStateToProps, mapDispatchToProps)(_bench_show2.default);
+
+/***/ }),
+/* 394 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(6);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _bench_map = __webpack_require__(386);
+
+var _bench_map2 = _interopRequireDefault(_bench_map);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var BenchShow = function BenchShow(_ref) {
+  var bench = _ref.bench;
+
+  return _react2.default.createElement(
+    'div',
+    { className: 'search' },
+    _react2.default.createElement(_bench_map2.default, {
+      singleBench: bench })
+  );
+};
+
+exports.default = BenchShow;
 
 /***/ })
 /******/ ]);

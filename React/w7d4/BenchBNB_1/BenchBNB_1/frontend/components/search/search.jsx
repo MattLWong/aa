@@ -15,7 +15,6 @@ class Search extends React.Component {
       <div className="search">
         <BenchMap
           benches={benches}
-          fetchBenches={fetchBenches}
           updateFilter={updateFilter}/>
         <FilterForm
           minSeating={this.props.minSeating}

@@ -1,16 +1,25 @@
 export default class MarkerManager {
-  constructor(map) {
+  constructor(map, method) {
     this.map = map;
     this.markers = {};
+    this.handleMarkerClick = method;
+  }
+
+  updateMarker(bench) {
+    const position = new google.maps.LatLng(bench.lat, bench.lng);
+    const marker = new google.maps.Marker({
+      position,
+      map: this.map,
+      id: bench.id
+    });
+    this.markers[bench.id] = marker;
   }
 
   //instance method
   updateMarkers(benches) {
     for (let key in benches) {
-      console.log("iterating through each bench...");
       let bench = benches[key];
       if (!Object.keys(this.markers).includes(key)) {
-        console.log("Adding bench to markers object!");
         this.createMarkerFromBench(bench);
       }
     }
@@ -23,12 +32,17 @@ export default class MarkerManager {
   }
 
   createMarkerFromBench(bench) {
+    const that = this;
     const position = new google.maps.LatLng(bench.lat, bench.lng);
     const marker = new google.maps.Marker({
       position,
       map: this.map,
       id: bench.id
     });
+    marker.addListener('click', (event) => {
+      console.log(marker.id);
+      that.handleMarkerClick(marker.id)
+    })
     this.markers[bench.id] = marker;
   }
 
@@ -36,7 +50,5 @@ export default class MarkerManager {
     console.log("a marker was deleted");
     this.markers[marker.id].setMap(null);
     delete this.markers[marker.id];
-    // this.markers[marker.id].setMap(null);
-    // delete this.markers[marker.benchId];
   }
 }
