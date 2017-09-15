@@ -1,8 +1,6 @@
 import React from 'react'
 
 class BenchIndex extends React.Component {
-  componentDidMount() {
-  }
 
   render() {
     const benches = this.props.benches;

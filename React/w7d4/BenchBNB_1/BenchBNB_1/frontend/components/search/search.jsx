@@ -10,12 +10,13 @@ class Search extends React.Component {
   }
 
   render() {
-    const { benches, fetchBenches, updateFilter } = this.props
+    const { benches, fetchBenches, updateFilter, fetchBench } = this.props
     return(
       <div className="search">
         <BenchMap
           benches={benches}
-          updateFilter={updateFilter}/>
+          updateFilter={updateFilter}
+          fetchBench={fetchBench}/>
         <FilterForm
           minSeating={this.props.minSeating}
           maxSeating={this.props.maxSeating}

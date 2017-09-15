@@ -15,6 +15,12 @@ export const createBench = data => dispatch => {
   )
 };
 
+export const fetchBench = id => dispatch => {
+  APIUtil.fetchBench(id).then(
+    res => dispatch(receiveBench(res))
+  )
+};
+
 export const receiveBenches = benches => ({
   type: RECEIVE_BENCHES,
   benches

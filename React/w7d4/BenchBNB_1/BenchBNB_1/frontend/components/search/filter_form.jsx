@@ -26,31 +26,5 @@ const FilterForm = ({minSeating, maxSeating, updateFilter}) => (
       </label>
   </div>
 )
-//
-// class FilterForm extends React.Component {
-//   constructor(props) {
-//     super(props)
-//     this.state = {
-//       minSeating: this.props.minSeating,
-//       maxSeating: this.props.maxSeating
-//     }
-//   }
-//
-//   update(property) {
-//     return e => {
-//       this.setState({[property]: e.target.value})
-//       this.props.updateFilter(property, this.state[property]);
-//     }
-//   }
-//
-//   render() {
-//     return(
-//         <div>
-//           <h3>Filter</h3>
-//
-//         </div>
-//     )
-//   }
-// }
 
 export default FilterForm;
