@@ -1,7 +1,6 @@
 import React from 'react'
 
 class BenchIndex extends React.Component {
-
   render() {
     const benches = this.props.benches;
     const benchesArray = Object.keys(benches).map( key => benches[key])

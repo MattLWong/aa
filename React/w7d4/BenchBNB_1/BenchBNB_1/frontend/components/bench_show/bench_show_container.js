@@ -4,18 +4,16 @@ import { fetchBench } from '../../actions/bench_actions';
 import { selectBench } from '../../reducers/selectors';
 
 const mapStateToProps = (state, {match}) => {
-  debugger;
-  const benchId = parseInt(match.params.id)
-  const bench = selectBench(state, match.params.id)
-  return({
+  const benchId = parseInt(match.params.id);
+  const bench = state.benches[benchId]
+  return{
     benchId,
     bench
-  })
-
+  }
 }
 
 const mapDispatchToProps = dispatch => ({
-  fetchBench: (bench) => dispatch(fetchBench(bench))
+  fetchBench: (id) => dispatch(fetchBench(id))
 })
 
 export default connect(

@@ -9,7 +9,11 @@ const BenchShow = ({ bench, benchId, fetchBench }) => {
   return(
     <div className="single-bench-show">
       <Link to="/">Back to Benches Index</Link>
-
+      <BenchMap
+        benches={benches}
+        benchId={benchId}
+        singleBench={true}
+        fetchBench={fetchBench}/>
     </div>
   )
 }

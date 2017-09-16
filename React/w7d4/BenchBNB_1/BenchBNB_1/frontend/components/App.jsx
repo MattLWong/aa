@@ -9,16 +9,19 @@ import SearchContainer from './search/search_container';
 import BenchFormContainer from './bench_form/bench_form_container';
 import BenchShowContainer from './bench_show/bench_show_container';
 
-const App = () => (
-  <div>
-    <h1>Bench BnB</h1>
-    <GreetingContainer/>
-    <AuthRoute path="/login" component={SessionFormContainer} />
-    <AuthRoute path="/signup" component={SessionFormContainer} />
-    <ProtectedRoute path="/benches/new" component={BenchFormContainer} />
-    <Route exact path='/' component={SearchContainer} />
-    <Route path='/benches/:id' component={BenchShowContainer} />
-  </div>
-)
+const App = () => {
+  return(
+    <div className="reactroot">
+      <h1>Bench BnB</h1>
+      <GreetingContainer/>
+      <AuthRoute path="/login" component={SessionFormContainer} />
+      <AuthRoute path="/signup" component={SessionFormContainer} />
+      <ProtectedRoute path="/benches/new" component={BenchFormContainer} />
+      <Route exact path='/' component={SearchContainer} />
+      <Route path='/benches/:id' component={BenchShowContainer} />
+    </div>
+  )
+}
+
 
 export default App;

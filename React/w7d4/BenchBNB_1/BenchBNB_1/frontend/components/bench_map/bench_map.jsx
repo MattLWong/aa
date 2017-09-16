@@ -2,11 +2,10 @@ import React from 'react';
 import MarkerManager from '../../util/marker_manager';
 import { withRouter } from 'react-router-dom';
 
-const defaultSF = {
+const defaultOptions = {
   center: { lat: 37.7758, lng: -122.435},
   zoom: 12
 }
-
 const getCoordsObj = latLng => ({
   lat: latLng.lat(),
   lng: latLng.lng()
@@ -15,13 +14,14 @@ const getCoordsObj = latLng => ({
 class BenchMap extends React.Component {
   componentDidMount() {
     const map = this.refs.map
-    this.map = new google.maps.Map(map, defaultSF);
+    this.map = new google.maps.Map(map, defaultOptions);
+    window.map = this.map;
     this.MarkerManager = new MarkerManager(this.map, this.handleMarkerClick.bind(this));
     if (this.props.singleBench) {
       this.props.fetchBench(this.props.benchId)
     } else {
       this.registerListeners();
-      this.MarkerManager.updateMarkers(this.props.benches)
+      this.MarkerManager.updateMarkers(this.props.benches);
     }
   }
 
@@ -40,11 +40,14 @@ class BenchMap extends React.Component {
     })
   }
 
+
   componentDidUpdate() {
     if (this.props.singleBench) {
       const targetBenchKey = Object.keys(this.props.benches)[0];
       const targetBench = this.props.benches[targetBenchKey];
       this.MarkerManager.updateMarkers([targetBench]);
+      this.map.setCenter({lat: targetBench.lat, lng: targetBench.lng});
+      this.map.setZoom(18);
     } else {
       this.MarkerManager.updateMarkers(this.props.benches);
     }
@@ -57,8 +60,8 @@ class BenchMap extends React.Component {
     });
   }
 
-  handleMarkerClick(benchId) {
-    this.props.history.push(`benches/${benchId}`);
+  handleMarkerClick(bench) {
+    this.props.history.push(`benches/${bench.id}`);
   }
 
   render() {
