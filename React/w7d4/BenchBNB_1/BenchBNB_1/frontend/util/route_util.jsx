@@ -2,11 +2,15 @@ import React from 'react';
 import { Route, withRouter, Redirect } from 'react-router-dom'
 import { connect } from 'react-redux'
 
-const Auth = ({ component: Component, path, loggedIn }) => {
-  // debugger;
+// const Auth = ({ component: Component, path, loggedIn }) => {
+
+const Auth = (props) => {
+  debugger;
+  const { component: Component, path, loggedIn } = props;
+  debugger;
   return(
     <Route path={path} render={ (props) => {
-        // debugger;
+        debugger;
         return(
             !loggedIn ? (
               <Component {...props} />
@@ -19,6 +23,7 @@ const Auth = ({ component: Component, path, loggedIn }) => {
 }
 
 const Pro = ({ component: Component, path, loggedIn }) => {
+  debugger;
   return(
     <Route path={path} render={ (props) => {
       return(

@@ -31538,23 +31538,27 @@ var _reactRedux = __webpack_require__(20);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var Auth = function Auth(_ref) {
-  var Component = _ref.component,
-      path = _ref.path,
-      loggedIn = _ref.loggedIn;
+// const Auth = ({ component: Component, path, loggedIn }) => {
 
-  // debugger;
+var Auth = function Auth(props) {
+  debugger;
+  var Component = props.component,
+      path = props.path,
+      loggedIn = props.loggedIn;
+
+  debugger;
   return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
-      // debugger;
+      debugger;
       return !loggedIn ? _react2.default.createElement(Component, props) : _react2.default.createElement(_reactRouterDom.Redirect, { to: '/' });
     } });
 };
 
-var Pro = function Pro(_ref2) {
-  var Component = _ref2.component,
-      path = _ref2.path,
-      loggedIn = _ref2.loggedIn;
+var Pro = function Pro(_ref) {
+  var Component = _ref.component,
+      path = _ref.path,
+      loggedIn = _ref.loggedIn;
 
+  debugger;
   return _react2.default.createElement(_reactRouterDom.Route, { path: path, render: function render(props) {
       return !loggedIn ? _react2.default.createElement(_reactRouterDom.Redirect, { to: '/login' }) : _react2.default.createElement(Component, props);
     } });
@@ -31789,8 +31793,8 @@ var MarkerManager = function () {
   }, {
     key: 'removeMarker',
     value: function removeMarker(marker) {
-      this.markers[marker.benchId].setMap(null);
-      delete this.markers[marker.benchId];
+      marker.setMap(null);
+      delete this.markers[marker.id];
     }
   }]);
 
