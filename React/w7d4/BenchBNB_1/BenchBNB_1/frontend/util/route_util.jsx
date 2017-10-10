@@ -4,9 +4,7 @@ import { connect } from 'react-redux'
 
 // const Auth = ({ component: Component, path, loggedIn }) => {
 
-const Auth = (props) => {
-  debugger;
-  const { component: Component, path, loggedIn } = props;
+const Auth = ({ component: Component, path, loggedIn }) => {
   debugger;
   return(
     <Route path={path} render={ (props) => {
@@ -23,7 +21,6 @@ const Auth = (props) => {
 }
 
 const Pro = ({ component: Component, path, loggedIn }) => {
-  debugger;
   return(
     <Route path={path} render={ (props) => {
       return(

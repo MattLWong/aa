@@ -14,6 +14,8 @@ const mapStateToProps = (state, {match}) => {
 
 const mapDispatchToProps = dispatch => ({
   fetchBench: (id) => dispatch(fetchBench(id))
+
+
 })
 
 export default connect(
