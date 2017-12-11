@@ -1,0 +1,35 @@
+{\rtf1\ansi\ansicpg1252\cocoartf1561\cocoasubrtf100
+{\fonttbl\f0\fnil\fcharset0 Menlo-Regular;}
+{\colortbl;\red255\green255\blue255;}
+{\*\expandedcolortbl;;}
+\margl1440\margr1440\vieww10840\viewh10800\viewkind0
+\pard\tx720\tx1440\tx2160\tx2880\tx3600\tx4320\tx5040\tx5760\tx6480\tx7200\tx7920\tx8640\pardirnatural\partightenfactor0
+
+\f0\fs30 \cf0 \
+git init\
+git status\
+\
+git add (file) - adds to staging area, not in local repository yet\
+git add \'91*.txt\'92\
+\
+git log - the journal\
+\
+git remote add origin (url)\
+\
+git push -u (remote server name - origin) (default local branch - master)\
+git pull origin master (pulls from the url origin)\
+git diff HEAD\
+git diff \'97staged\
+git reset (file name) - removes from staging area\
+git checkout \'97- octocat.txt (gets rid of all changes since the last commit for octocat.txt)\
+git branch - see all the branches\
+git branch clean_up - creates a new branch called clean_up, which will be merged back to main master branch\
+git checkout <branch> \
+git rm \'91*.txt\'92 - gets rid of everything\
+git merge clean_up (merges clean_up with master, when on the master branch)\
+git branch -d clean-up (deletes the branch clean-up)\
+\
+\
+git stash (then pull, then git stash apply)\
+\
+git config \'97-global user.name \'93Matt\'94}
