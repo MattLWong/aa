@@ -2,7 +2,7 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   helper_method :current_user
-  
+
   def current_user
     # fetches the user we've logged in as
     return nil if self.session[:session_token].nil?
@@ -27,4 +27,5 @@ class ApplicationController < ActionController::Base
   def require_not_logged_in!
     redirect_to feed_url unless current_user.nil?
   end
+
 end
