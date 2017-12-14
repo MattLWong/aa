@@ -44,7 +44,7 @@ class DOMNodeCollection {
 
   attr(attribute, val) {
     if (val) {
-      this.nodes[0].setAttribute(attribute, val);
+      this.each(node => node.setAttribute(attribute, val));
     } else {
       return this.nodes[0].getAttribute(attribute);
     }
@@ -60,6 +60,66 @@ class DOMNodeCollection {
 
   toggleClass(toggleClass) {
     this.each(node => node.classList.toggle(toggleClass));
+  }
+
+  children() {
+    let childNodes = [];
+    this.each(node => {
+      const childNodeList = node.children;
+      childNodes = childNodes.concat(Array.from(childNodeList));
+    });
+    return new DOMNodeCollection(childNodes);
+  }
+
+  parents() {
+    let parents = [];
+    this.each(({ parentNode }) => {
+      if (!parentNode.visited) {
+        parents.push(parentNode);
+        parentNode.visited = true; //adding on a new property
+      }
+    });
+
+    parents.forEach((node) => {
+      node.visited = false;
+    });
+    return new DOMNodeCollection(parents);
+  }
+
+  find(selector) {
+    let foundNodes = [];
+    this.each(node => {
+      const selectedNodes = node.querySelectorAll(selector);
+      foundNodes = foundNodes.concat(Array.from(selectedNodes));
+    });
+    return new DOMNodeCollection(foundNodes);
+  }
+
+  remove() {
+    this.each(node => node.parentNode.removeChild(node));
+  }
+
+  on(type, fn) {
+    this.each(node => {
+      node.addEventListener(type, fn);
+      const eventKey = `jqliteEvents-${type}`;
+      if (typeof node[eventKey] === 'undefined') {
+        node[eventKey] = [];
+      }
+      node[eventKey].push(fn);
+    });
+  }
+
+  off(eventName) {
+    this.each((node) => {
+      const eventKey = `jqliteEvents-${eventName}`;
+      if (node[eventKey]) {
+        node[eventKey].forEach((callback) => {
+          node.removeEventListener(eventName, callback);
+        });
+      }
+      node[eventKey] = [];
+    });
   }
 }
 module.exports = DOMNodeCollection;
