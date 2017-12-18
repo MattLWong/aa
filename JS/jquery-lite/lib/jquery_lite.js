@@ -85,7 +85,7 @@ window.$l = (arg) => {
     case 'function':
       return registerDocReadyCallback(arg);
     case 'string':
-      return getNodesFromDom(arg);
+      return getNodesFromDOM(arg);
   }
 };
 
